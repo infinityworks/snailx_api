@@ -19,7 +19,7 @@ def snails():
     }
 
 
-@app.route('/race')
+@app.route('/races')
 def race():
     """GET end point to return race information"""
     return {
