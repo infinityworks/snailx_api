@@ -1,4 +1,4 @@
-# SnailJ API
+# SnailX API
 
 External team API for the SnailX project.
 
