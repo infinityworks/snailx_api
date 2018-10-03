@@ -24,7 +24,6 @@ TBD
 
 - Run ```make destroy-all```
 
-
 ## Running the Tests
 
 TBD
