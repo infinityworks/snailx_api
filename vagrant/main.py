@@ -10,6 +10,7 @@ def hello():
 
 @app.route('/snails')
 def snails():
+    """GET end point to return snails information"""
     return {
         "id": 1,
         "name": "Terry",
@@ -20,6 +21,7 @@ def snails():
 
 @app.route('/race')
 def race():
+    """GET end point to return race information"""
     return {
         "id": 1,
         "date": "15:8:2018",
@@ -31,6 +33,7 @@ def race():
 
 @app.route('/rounds')
 def rounds():
+    """GET end point to return round information"""
     return {
         "id": 1,
         "name": "",
@@ -42,6 +45,7 @@ def rounds():
 
 @app.route('/results')
 def results():
+    """GET end point to return results"""
     return {
         "id_race": 1,
         "id_snail": 1,
