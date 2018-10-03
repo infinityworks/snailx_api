@@ -25,7 +25,7 @@ def race():
         "date": "15:8:2018",
         "status": "played",
         "id_round": 1,
-        "id_raceParticipants": 1
+        "id_race_participants": 1
     }
 
 
