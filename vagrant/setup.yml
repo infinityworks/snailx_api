@@ -27,6 +27,12 @@
         state: present
         update_cache: yes
 
+    - name: Install pip
+      apt:
+        name: python-pip
+        state: present
+        update_cache: yes
+
     - name: Install 'virtualenv' package
       pip:
         name: virtualenv

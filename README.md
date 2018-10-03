@@ -14,7 +14,18 @@ TBD
 
 TBD
 
-## Running the tests
+### Setting up Dev Environment
+
+- Run ```make build```
+- Run ```make up```
+- Navigate to ```0.0.0.0:5000```
+
+### Tearing Down the Dev Environment
+
+- Run ```make destroy-all```
+
+
+## Running the Tests
 
 TBD
 
