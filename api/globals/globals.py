@@ -9,5 +9,4 @@ app.config.from_object(Config)
 db = SQLAlchemy(app)
 migrate = Migrate(app, db)
 
-#app components
 app.register_blueprint(auth_blueprint)
