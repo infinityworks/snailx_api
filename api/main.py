@@ -11,6 +11,7 @@ def hello():
 @app.route('/snails')
 def snails():
     """GET end point to return snails information"""
+
     return {
         "id": 1,
         "name": "Terry",
