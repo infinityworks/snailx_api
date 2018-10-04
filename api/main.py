@@ -1,7 +1,5 @@
-from flask_api import FlaskAPI
-
-app = FlaskAPI(__name__)
-
+from globals.globals import app
+from db.models import Snail
 
 @app.route("/")
 def hello():
@@ -11,13 +9,24 @@ def hello():
 @app.route('/snails')
 def snails():
     """GET end point to return snails information"""
+    snail = Snail()
 
-    return {
-        "id": 1,
-        "name": "Terry",
-        "id_trainer": 1,
-        "age": 23
-    }
+    #snail.add_new_snail(1, 13, "Terry")
+
+    query_response = snail.get_snail(1)
+
+    if query_response:
+        json = {
+            "id": query_response.id,
+            "name": query_response.name,
+            "age": query_response.age,
+            "id_trainer": 15
+
+        }
+
+        return json
+
+    return False # TODO RETURN 404 ERROR CODE
 
 
 @app.route('/races')
