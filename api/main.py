@@ -11,8 +11,6 @@ def snails():
     """GET end point to return snails information"""
     snail = Snail()
 
-    #snail.add_new_snail(1, 13, "Terry")
-
     query_response = snail.get_snail(1)
 
     if query_response:
@@ -26,7 +24,7 @@ def snails():
 
         return json
 
-    return False # TODO RETURN 404 ERROR CODE
+    return False  # TODO RETURN 404 ERROR CODE
 
 
 @app.route('/races')

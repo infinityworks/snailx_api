@@ -13,10 +13,3 @@ class Snail(db.Model):
     def get_snail(self, id):
         snail = self.query.filter_by(id=id).first()
         return snail
-
-    def add_new_snail(self, id, age, name):
-        self.id = id
-        self.age = age
-        self.name = name
-        db.session.add(self)
-        db.session.commit()
