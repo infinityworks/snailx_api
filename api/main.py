@@ -1,7 +1,6 @@
 from globals.globals import app
 from db.models import Snail
 
-
 @app.route('/snails')
 def snails():
     """GET end point to return snails information"""
