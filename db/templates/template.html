@@ -2,30 +2,37 @@
   <body>
     <h1>Add Snail</h1>
     <form method="POST" action="/">
-      <input type="text" name="title">
+      <input type="text" name="name">
+      <input type="text" name="trainer_id">
       <input type="submit" value="Add">
     </form>
-
+    
     <h1>Snails</h1>
     <table>
-      {% for book in books %}
+      {% for snail in snails %}
         <tr>
           <td>
-            {{book.title}}
+            {{snail.id}}
           </td>
           <td>
+            {{snail.name}}
+          </td>
+          <td>
+              {{snail.trainer_id}}
+          </td>
+          <!-- <td>
             <form method="POST" action="./update" style="display: inline">
-              <input type="hidden" value="{{book.title}}" name="oldtitle">
-              <input type="text" value="{{book.title}}" name="newtitle">
+              <input type="hidden" value="{{snail.title}}" name="oldtitle">
+              <input type="text" value="{{snail.title}}" name="newtitle">
               <input type="submit" value="Update">
             </form>
           </td>
           <td>
             <form method="POST" action="./delete" style="display: inline">
-              <input type="hidden" value="{{book.title}}" name="title">
+              <input type="hidden" value="{{snail.title}}" name="title">
               <input type="submit" value="Delete">
             </form>
-          </td>
+          </td> -->
         </tr>
       {% endfor %}
     </table>

@@ -7,6 +7,7 @@ from flask import request
 
 from flask_sqlalchemy import SQLAlchemy
 
+
 project_dir = os.path.dirname(os.path.abspath(__file__))
 database_file = "sqlite:///{}".format(os.path.join(project_dir, "api.db"))
 
@@ -16,49 +17,106 @@ app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 
 db = SQLAlchemy(app)
 
-class Book(db.Model):
-    title = db.Column(db.String(80), unique=True, nullable=False, primary_key=True)
+class Trainer(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(12), nullable=False)
+    snail = db.relationship('Snail', backref='trainer', lazy=True)
+    #def __repr__(self):
+    #    return "<id: {}>".format(self.id)
+
+class Snail(db.Model):
+    __tablename__ = 'snail'
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(12), nullable=True)
+    trainer_id = db.Column(db.Integer, db.ForeignKey('trainer.id'))
+    #trainer_name = db.Column(db.Integer(), ForeignKey=("trainer.name"))
+    #trainer = db.relationship('Trainer', back_populates="snail")
+    
+    #def __repr__(self):
+    #   return "<Name: {}>".format(self.Name)
+
+
+"""class RaceParticipants(db.Model):
+    id = db.Column(db.Integer(), unique=True, nullable=False, primary_key=True, autoincrement=True)
+    id_Snail = db.Column(db.Integer(), nullable=False, ForeignKey=("snail.id"))
 
     def __repr__(self):
         return "<Title: {}>".format(self.title)
 
+class Race(db.Model):
+    id = db.Column(db.Integer(), unique=True, nullable=False, primary_key=True, autoincrement=True)
+    Date = db.Column(db.DateTime(), nullable=False)
+    Status = db.Column(db.String(), nullable=False)
+    id_Round = db.Column(db.Integer(), nullable=False)
+    id_RaceParticipants = db.Column(db.Integer(), nullable=False, ForeignKey=("RaceParticipants.id"))
+
+    def __repr__(self):
+        return "<Title: {}>".format(self.title)
+
+class Round(db.Model):
+    id = db.Column(db.Integer(), unique=True, nullable=False, primary_key=True, autoincrement=True)
+    Name = db.Column(db.String(12), nullable=False)
+    NumRaces = db.Column(db.Integer(), nullable=False)
+    StartDate = db.Column(db.DateTime(), nullable=False)
+    EndDate = db.Column(db.DateTime(), nullable=False)
+
+    def __repr__(self):
+        return "<Title: {}>".format(self.title)
+
+class RaceResult(db.Model):
+    id = db.Column(db.Integer(), unique=True, nullable=False, primary_key=True, autoincrement=True)
+    id_Race = db.Column(db.Integer(), nullable=False, ForeignKey=("Race.id"))
+    id_FirstPace = db.Column(db.Integer(), nullable=False, ForeignKey=("Snail.id"))
+    id_SecondPlace = db.Column(db.Integer(), nullable=False, ForeignKey=("Snail.id"))
+    id_ThirdPlace = db.Column(db.Integer(), nullable=False, ForeignKey=("Snail.id"))
+
+    def __repr__(self):
+        return "<Title: {}>".format(self.title)
+
+class TrainersSnails(db.Model):
+    id = db.Column(db.Integer(), unique=True, nullable=False, primary_key=True, autoincrement=True)
+    id_Snail = db.Column(db.Integer(), nullable=False, ForeignKey=("Snail.id")) 
+
+    def __repr__(self):
+        return "<Title: {}>".format(self.title)"""
+
 @app.route('/', methods=["GET", "POST"])
 def home():
-    books = None
+    snails = None
     if request.form:
         try:
-            book = Book(title=request.form.get("title"))
-            db.session.add(book)
+            snail = Snail(name=request.form.get("name"), trainer_id=request.form.get("trainer_id"))
+            db.session.add(snail)
             db.session.commit()
         except Exception as e:
             db.session.rollback()
-            print("Failed to add book")
+            print("Failed to add snail")
             print(e)
-    books = Book.query.all()
-    return render_template("template.html", books=books)
+    snails = Snail.query.all()
+    return render_template("template.html", snails=snails)
 
-@app.route("/update", methods=["POST"])
+"""@app.route("/update", methods=["POST"])
 def update():
     try:
         newtitle = request.form.get("newtitle")
         oldtitle = request.form.get("oldtitle")
-        book = Book.query.filter_by(title=oldtitle).first()
-        book.title = newtitle
+        snail = Snail.query.filter_by(Name=oldtitle).first()
+        snail.title = newtitle
         db.session.commit()
     except Exception as e:
         db.session.rollback()
-        print("Couldn't update book title")
+        print("Couldn't update snail title")
         print(e)
     return redirect("/")
 
 @app.route("/delete", methods=["POST"])
 def delete():
     title = request.form.get("title")
-    book = Book.query.filter_by(title=title).first()
-    db.session.delete(book)
+    snail = Snail.query.filter_by(Name=Name).first()
+    db.session.delete(snail)
     db.session.commit()
     return redirect("/")
-
+"""
 
 if __name__ == "__main__":
     app.run(debug=True)
