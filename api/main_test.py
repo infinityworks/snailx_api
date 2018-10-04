@@ -32,7 +32,7 @@ class TestEndpoints(TestCase):
         with patch.object(Snail, 'get_snail', return_value=None) as snail:
             result = main.snails()
 
-            expected_result = False
+            expected_result = 404
 
             self.assertEqual(result, expected_result)
 

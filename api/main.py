@@ -21,7 +21,7 @@ def snails():
 
         return json
 
-    return False  # TODO RETURN 404 ERROR CODE
+    return 404
 
 
 @app.route('/races')
