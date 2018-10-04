@@ -1,16 +1,11 @@
 from globals.globals import app
 from db.models import Snail
 
-@app.route("/")
-def hello():
-    return {"Hello": "World!"}
-
 
 @app.route('/snails')
 def snails():
     """GET end point to return snails information"""
     snail = Snail()
-
     query_response = snail.get_snail(1)
 
     if query_response:
@@ -18,8 +13,10 @@ def snails():
             "id": query_response.id,
             "name": query_response.name,
             "age": query_response.age,
-            "id_trainer": 15
-
+            "trainer": {
+                "id": 17,
+                "name": "gazza"
+            }
         }
 
         return json
@@ -28,14 +25,14 @@ def snails():
 
 
 @app.route('/races')
-def race():
+def races():
     """GET end point to return race information"""
     return {
         "id": 1,
         "date": "15:8:2018",
-        "status": "played",
+        "status": 3,
         "id_round": 1,
-        "id_race_participants": 1
+        "id_snails": [1, 2, 3, 4, 5]
     }
 
 
@@ -51,15 +48,16 @@ def rounds():
     }
 
 
-@app.route('/results')
+@app.route('/races/results')
 def results():
     """GET end point to return results"""
     return {
         "id_race": 1,
-        "id_snail": 1,
-        "position": 1,
-        "time": "400",
-        "DNF": False
+        "snails": [
+            {"id_snail": 1, "position_snail:": 3, "time_snail": 600, "DNF": False},
+            {"id_snail": 2, "position_snail:": 2, "time_snail": 500, "DNF": False},
+            {"id_snail": 3, "position_snail:": 1, "time_snail": 400, "DNF": False},
+        ]
     }
 
 
