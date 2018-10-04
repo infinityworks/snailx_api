@@ -6,7 +6,9 @@ from db.models import Snail
 def snails():
     """GET end point to return snails information"""
     snail = Snail()
+    trainer = Trainer()
     query_response = snail.get_snail(1)
+    query_response_trainer = trainer.get_trainer(1)
 
     if query_response:
         json = {
@@ -14,8 +16,8 @@ def snails():
             "name": query_response.name,
             "age": query_response.age,
             "trainer": {
-                "id": 17,
-                "name": "gazza"
+                "id": query_response_trainer.id
+                "name": query_response_trainer.name
             }
         }
 
