@@ -10,25 +10,35 @@ HARDCODED_USER_ID = 1
 @auth_blueprint.route('/auth/token')
 def auth_token():
     """
-    Generates the Auth Token
+    Endpoint to retrieve an auth token.
     :return: string
     """
     try:
-        payload = {
-            'exp': datetime.datetime.utcnow() + datetime.timedelta(days=30),
-            'iat': datetime.datetime.utcnow(),
-            'sub': HARDCODED_USER_ID
-        }
-
-        token = jwt.encode(
-            payload,
-            app.config.get('SECRET_KEY'),
-            algorithm='HS256'
-        )
-
+        token = encode_auth_token()
         return make_response({"token": token.decode('utf-8')}), 200
     except Exception as e:
         return e
+
+
+def encode_auth_token():
+    """
+    Generates an API auth token.
+    Returns:
+        [bytes] -- [auth token]
+    """
+
+    payload = {
+        'exp': datetime.datetime.utcnow() + datetime.timedelta(days=30),
+        'iat': datetime.datetime.utcnow(),
+        'sub': HARDCODED_USER_ID
+    }
+
+    token = jwt.encode(
+        payload,
+        app.config.get('SECRET_KEY'),
+        algorithm='HS256'
+    )
+    return token
 
 
 def decode_auth_token(auth_token):
@@ -58,7 +68,7 @@ def authenticate_request():
 
 def unauthorised_response():
     responseObject = {
-        'status': 'fail',
-        'message': 'Unauthorised'
+        'status': 'Failed',
+        'message': 'Unauthorized'
     }
     return make_response(responseObject), 401
