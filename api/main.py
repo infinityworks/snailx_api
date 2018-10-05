@@ -1,25 +1,25 @@
 from globals.globals import app
 from db.models import Snail, Trainer
-
+ 
 
 @app.route('/snails')
 def snails():
     """GET end point to return snails information"""
     snail = Snail()
+    query_snail = snail.get_snail(1)
     trainer = Trainer()
-    query_response = snail.get_snail(1)
-    #query_response_trainer = trainer.get_trainer(1)
-    if query_response:
+    query_trainer = trainer.get_trainer(query_snail.trainer_id)
+    if query_snail:
         json = {
-            "id": query_response.id,
-            "name": query_response.name,
+            "id": query_snail.id,
+            "name": query_snail.name,
             "trainer": {
-                "id": query_response.trainer_id,
-                "name": query_response.trainer_name
+                "id": query_trainer.id,
+                "name": query_trainer.name
             }
         }
         return json
-
+    
     return 404
 
 

@@ -4,19 +4,21 @@ from globals.globals import db
 class Trainer(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(12), nullable=False)
-    snail = db.relationship('Snail', backref='trainer', lazy=True)
+    #snail = db.relationship('Snail', backref='trainer', lazy=True)
+
     def __repr__(self):
         return "<id: {}>".format(self.id)
     def get_trainer(self, id):
         trainer = self.query.filter_by(id=id).first()
         return trainer
 
-
+ 
 class Snail(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(12), nullable=True)
     trainer_id = db.Column(db.Integer, db.ForeignKey('trainer.id'))
-    trainer_name = db.relationship("Trainer", foreign_keys=[trainer_id])
+    #trainer_name = db.relationship("Trainer", foreign_keys=[trainer_id])
+
     def __repr__(self):
        return "<id: {}>".format(self.id) 
     def get_snail(self, id):
