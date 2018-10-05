@@ -9,10 +9,12 @@ HARDCODED_USER_ID = 1
 
 @auth_blueprint.route('/auth/token')
 def auth_token():
+    """[Endpoint to retrieve an Authorization token.]
+    
+    Returns:
+        [JSON] -- [Containing 'token' key with corresponding Authorization token.]
     """
-    Endpoint to retrieve an auth token.
-    :return: string
-    """
+
     try:
         token = encode_auth_token()
         return make_response({"token": token.decode('utf-8')}), 200
