@@ -1,9 +1,18 @@
 from globals.globals import app
 from db.models import Snail
+from auth.auth import decode_auth_token
+from flask import request, make_response
+
+authenticated_users = [1]
+
 
 @app.route('/snails')
 def snails():
     """GET end point to return snails information"""
+
+    if not authenticate_request():
+        return unauthorised_response()
+
     snail = Snail()
     query_response = snail.get_snail(1)
 
@@ -59,6 +68,22 @@ def results():
         ]
     }
 
+
+def authenticate_request():
+    req_token = request.headers.get('Authorization')
+    if req_token:
+        req_user_id = decode_auth_token(req_token)
+        if req_user_id in authenticated_users:
+            return True
+    return False
+
+
+def unauthorised_response():
+    responseObject = {
+        'status': 'fail',
+        'message': 'Unauthorised'
+    }
+    return make_response(responseObject), 401
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', debug=True)

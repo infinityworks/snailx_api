@@ -10,7 +10,7 @@ HARDCODED_USER_ID = 1
 @auth_blueprint.route('/auth/token')
 def auth_token():
     """
-        Generates the Auth Token
+    Generates the Auth Token
     :return: string
     """
     try:
@@ -26,12 +26,11 @@ def auth_token():
             algorithm='HS256'
         )
 
-        return {"token": token.decode('utf-8')}
+        return make_response( {"token": token.decode('utf-8')} ), 200
     except Exception as e:
         return e
 
 
-@staticmethod
 def decode_auth_token(auth_token):
     """
     Decodes the auth token
