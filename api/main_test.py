@@ -5,24 +5,23 @@ import main
 
 
 class MockSnail:
-    def __init__(self, id, name, age):
+    def __init__(self, id, name, trainer_id, trainer_name):
         self.id = id
         self.name = name
-        self.age = age
-
+        self.trainer_id = trainer_id
+        self.trainer_name = trainer_name
 
 class TestEndpoints(TestCase):
     def test_snails_returns_snails(self):
-        with patch.object(Snail, 'get_snail', return_value=MockSnail(1, "Terry", 12)) as snail:
+        with patch.object(Snail, 'get_snail', return_value=MockSnail(1, "Matt", 1, "Sandeep")) as snail:
             result = main.snails()
 
             expected_result = {
                 "id": 1,
-                "name": "Terry",
-                "age": 12,
+                "name": "Matt",
                 "trainer": {
-                    "id": 17,
-                    "name": "gazza"
+                    "id": 1,
+                    "name": "Sandeep"
                 }
             }
 

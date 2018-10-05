@@ -8,18 +8,16 @@ def snails():
     snail = Snail()
     trainer = Trainer()
     query_response = snail.get_snail(1)
-    query_response_trainer = trainer.get_trainer(1)
-    print(query_response)
+    #query_response_trainer = trainer.get_trainer(1)
     if query_response:
         json = {
             "id": query_response.id,
             "name": query_response.name,
             "trainer": {
                 "id": query_response.trainer_id,
-                "name": query_response_trainer.name
+                "name": query_response.trainer_name
             }
         }
-        print("We made a json")
         return json
 
     return 404
