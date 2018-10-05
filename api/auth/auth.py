@@ -41,12 +41,17 @@ def encode_auth_token():
     return token
 
 
+#TODO: change to use user ids and not hardcoded single user.
 def decode_auth_token(auth_token):
+    """[Decodes an API auth token.]
+    
+    Arguments:
+        auth_token {[string]} -- [The string token provided as in Authorization header.]
+    
+    Returns:
+        [int] -- [The user_id of the token.]
     """
-    Decodes the auth token
-    :param auth_token:
-    :return: integer|string
-    """
+
     try:
         payload = jwt.decode(auth_token, app.config.get('SECRET_KEY'))
         return payload['sub']

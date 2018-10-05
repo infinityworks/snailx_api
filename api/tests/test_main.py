@@ -12,6 +12,28 @@ class MockSnail:
 
 
 class TestEndpoints(TestCase):
+    def test_unauth_snails_returns_snails(self):
+        with patch.object(Snail, 'get_snail', return_value=MockSnail(1, "Terry", 12)) as snail:
+            result = main.snails()
+
+
+                        self.assertEqual(result, expected_result)
+
+
+    def test_snails_returns_snails(self):
+        with patch.object(Snail, 'get_snail', return_value=MockSnail(1, "Terry", 12)) as snail:
+            result = main.snails()
+
+
+
+
+    def test_snails_returns_false(self):
+        with patch.object(Snail, 'get_snail', return_value=None) as snail:
+            result = main.snails()
+
+            expected_result = 404
+
+            self.assertEqual(result, expected_result)
 
     def test_races_returns_races(self):
         result = main.races()
@@ -45,13 +67,11 @@ class TestEndpoints(TestCase):
         expected_result = {
             "id_race": 1,
             "snails": [
-                {"id_snail": 1, "position_snail:": 3,
-                    "time_snail": 600, "DNF": False},
-                {"id_snail": 2, "position_snail:": 2,
-                    "time_snail": 500, "DNF": False},
-                {"id_snail": 3, "position_snail:": 1,
-                    "time_snail": 400, "DNF": False},
+                {"id_snail": 1, "position_snail:": 3, "time_snail": 600, "DNF": False},
+                {"id_snail": 2, "position_snail:": 2, "time_snail": 500, "DNF": False},
+                {"id_snail": 3, "position_snail:": 1, "time_snail": 400, "DNF": False},
             ]
         }
 
         self.assertEqual(result, expected_result)
+
