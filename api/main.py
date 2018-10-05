@@ -1,5 +1,5 @@
 from globals.globals import app
-from db.models import Snail
+from db.models import Snail, Trainer
 
 
 @app.route('/snails')
@@ -9,18 +9,17 @@ def snails():
     trainer = Trainer()
     query_response = snail.get_snail(1)
     query_response_trainer = trainer.get_trainer(1)
-
+    print(query_response)
     if query_response:
         json = {
             "id": query_response.id,
             "name": query_response.name,
-            "age": query_response.age,
             "trainer": {
-                "id": query_response_trainer.id
+                "id": query_response.trainer_id,
                 "name": query_response_trainer.name
             }
         }
-
+        print("We made a json")
         return json
 
     return 404
