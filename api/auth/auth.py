@@ -26,7 +26,7 @@ def auth_token():
             algorithm='HS256'
         )
 
-        return make_response( {"token": token.decode('utf-8')} ), 200
+        return make_response({"token": token.decode('utf-8')}), 200
     except Exception as e:
         return e
 
@@ -44,3 +44,21 @@ def decode_auth_token(auth_token):
         return 'Signature expired. Please log in again.'
     except jwt.InvalidTokenError:
         return 'Invalid token. Please log in again.'
+
+
+def authenticate_request():
+    req_token = request.headers.get('Authorization')
+    if req_token:
+        req_user_id = decode_auth_token(req_token)
+        # hardcoded single user id for mvp
+        if req_user_id == HARDCODED_USER_ID:
+            return True
+    return False
+
+
+def unauthorised_response():
+    responseObject = {
+        'status': 'fail',
+        'message': 'Unauthorised'
+    }
+    return make_response(responseObject), 401
