@@ -83,5 +83,3 @@ class RaceResult(db.Model):
     def get_race_result(self, id):
         race_result = self.query.filter_by(id=id).first()
         return race_result
-
-
