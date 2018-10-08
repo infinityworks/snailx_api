@@ -12,6 +12,7 @@ class MockSnail:
         self.trainer_name = trainer_name
 
 class TestEndpoints(TestCase):
+<<<<<<< HEAD:api/main_test.py
     def test_snails_returns_snails(self):
         with patch.object(Snail, 'get_snail', return_value=MockSnail(1, "Matt", 1, "Sandeep")) as snail:
             result = main.snails()
@@ -35,6 +36,8 @@ class TestEndpoints(TestCase):
 
             self.assertEqual(result, expected_result)
 
+=======
+>>>>>>> e7256561ab479ff3772a78d0d5776a5420138dea:api/tests/test_main.py
     def test_races_returns_races(self):
         result = main.races()
 

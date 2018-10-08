@@ -105,4 +105,9 @@ venv.bak/
 
 # vagrant
 *.vagrant
+<<<<<<< HEAD
+
+#Mac OS .DS_Store
+=======
+>>>>>>> db-integration
 .DS_Store
