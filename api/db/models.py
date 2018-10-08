@@ -31,7 +31,8 @@ class RaceParticipants(db.Model):
     def __repr__(self):
         return "<id: {}>".format(self.id)
     def get_race_participants(self, id):
-        race_participants = self.query.filter_by(id=id_race).first()
+        # id_race produces an error "unidentified variable id_race"
+        race_participants = self.query.filter_by(id=id).first()
         return race_participants
 
 class Race(db.Model):
@@ -68,5 +69,6 @@ class RaceResult(db.Model):
         return "<id: {}>".format(self.id)
     def get_race_result(self, id):
         race_result = self.query.filter_by(id=id).first()
+        return race_result
 
 
