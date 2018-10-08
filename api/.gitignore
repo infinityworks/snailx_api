@@ -106,3 +106,5 @@ venv.bak/
 # vagrant
 *.vagrant
 
+#Mac OS .DS_Store
+.DS_Store
