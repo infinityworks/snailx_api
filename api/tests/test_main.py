@@ -12,30 +12,6 @@ class MockSnail:
 
 
 class TestEndpoints(TestCase):
-    def test_snails_returns_snails(self):
-        with patch.object(Snail, 'get_snail', return_value=MockSnail(1, "Terry", 12)) as snail:
-            result = main.snails()
-
-            expected_result = {
-                "id": 1,
-                "name": "Terry",
-                "age": 12,
-                "trainer": {
-                    "id": 17,
-                    "name": "gazza"
-                }
-            }
-
-            self.assertEqual(result, expected_result)
-
-    def test_snails_returns_false(self):
-        with patch.object(Snail, 'get_snail', return_value=None) as snail:
-            result = main.snails()
-
-            expected_result = 404
-
-            self.assertEqual(result, expected_result)
-
     def test_races_returns_races(self):
         result = main.races()
 
