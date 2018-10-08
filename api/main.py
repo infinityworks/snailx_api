@@ -1,14 +1,8 @@
-import sys
-sys.path.insert(0, '/vagrant/repos/snailx_api/api')
 from globals.globals import app
-from db.models import Snail, Trainer
-<<<<<<< HEAD
+from db.models import Snail
 from auth.auth import authenticate_request, unauthorised_response
 from flask import request, make_response
 
-=======
- 
->>>>>>> db-integration
 
 @app.route('/snails')
 def snails():
@@ -18,20 +12,21 @@ def snails():
         return unauthorised_response()
 
     snail = Snail()
-    query_snail = snail.get_snail(1)
-    trainer = Trainer()
-    query_trainer = trainer.get_trainer(query_snail.trainer_id)
-    if query_snail:
+    query_response = snail.get_snail(1)
+
+    if query_response:
         json = {
-            "id": query_snail.id,
-            "name": query_snail.name,
+            "id": query_response.id,
+            "name": query_response.name,
+            "age": query_response.age,
             "trainer": {
-                "id": query_trainer.id,
-                "name": query_trainer.name
+                "id": 17,
+                "name": "gazza"
             }
         }
+
         return json
-    
+
     return 404
 
 
