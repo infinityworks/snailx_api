@@ -105,4 +105,4 @@ venv.bak/
 
 # vagrant
 *.vagrant
-
+.DS_Store
