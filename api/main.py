@@ -2,6 +2,7 @@ from globals.globals import app
 from db.models import Snail
 from auth.auth import authenticate_request, unauthorised_response
 from flask import request, make_response
+import os
 
 
 @app.route('/snails')
@@ -68,4 +69,5 @@ def results():
 
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', debug=True)
+    port = int(os.environ.get('PORT', 5000))
+    app.run(host='0.0.0.0', port=port)
