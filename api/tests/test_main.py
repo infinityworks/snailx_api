@@ -5,11 +5,10 @@ import main
 
 
 class MockSnail:
-    def __init__(self, id, name, trainer_id, trainer_name):
+    def __init__(self, id, name, age):
         self.id = id
         self.name = name
-        self.trainer_id = trainer_id
-        self.trainer_name = trainer_name
+        self.age = age
 
 
 class TestEndpoints(TestCase):

@@ -1,26 +1,14 @@
-import sys
-sys.path.insert(0, '/vagrant/repos/snailx_api/api')
 from globals.globals import db
 
 
-class Trainer(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String(12), nullable=False)
-
-    def __repr__(self):
-        return "<Trainer\nid: {}\n name: {}>".format(self.id, self.name)
-
-    def get_trainer(self, id):
-        return self.query.filter_by(id=id).first()
-
-
 class Snail(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String(12), nullable=False)
-    trainer_id = db.Column(db.Integer, db.ForeignKey('trainer.id'), nullable=False)
+    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    age = db.Column(db.Integer)
+    name = db.Column(db.String(80), index=True, unique=False)
+    # TODO: ID_TRAINER FOREIGN KEY
 
     def __repr__(self):
-        return "<Snail\nid: {}\n name: {}\n trainer_id: {}>".format(self.id, self.name, self.trainer_id)
+        return "<Name: {}>".format(self.name)
 
     def get_snail(self, id):
         return self.query.filter_by(id=id).first()

@@ -25,14 +25,8 @@ class TestSnailsEndpoint(unittest.TestCase):
         headers = {'Authorization': token}
         with self.app as client:
             response = client.get("/snails", headers=headers).get_json()
-            expected_result = {
-                "id": 1,
-                "name": "Little Gazza",
-                "trainer": {
-                        "id": 1,
-                        "name": "Gazza"
-                }
-            }
+            expected_result = {'id': 1, 'name': 'Terry',
+                               'age': 13, 'trainer': {'id': 17, 'name': 'gazza'}}
             self.assertEqual(response, expected_result)
 
 
