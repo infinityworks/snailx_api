@@ -27,11 +27,10 @@ class TestSnailsEndpoint(unittest.TestCase):
             response = client.get("/snails", headers=headers).get_json()
             expected_result = {
                 "id": 1,
-                "name": "Terry",
-                "age": 13,
+                "name": "Little Gazza",
                 "trainer": {
-                        "id": 17,
-                        "name": "gazza"
+                        "id": 1,
+                        "name": "Gazza"
                 }
             }
             self.assertEqual(response, expected_result)
