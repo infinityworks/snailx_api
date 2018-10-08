@@ -22,11 +22,9 @@ jobs:
 
       # Download and cache dependencies
       - restore_cache:
-          command: cd api
-          keys:
-          - v1-dependencies-{{ checksum "requirements.txt" }}
-          # fallback to using the latest cache if no exact match is found
-          - v1-dependencies-
+          key: pip-dependency-cache
+          paths:
+            - api/requirements.txt
 
       - run:
           name: install dependencies
@@ -37,8 +35,9 @@ jobs:
             pip install -r requirements.txt
 
       - save_cache:
-          command: cd api
-          key: v1-dependencies-{{ checksum "requirements.txt" }}
+          key: pip-dependency-cache
+          paths:
+            - api/requirements.txt
         
       # run tests!
       # this example uses Django's built-in test-runner
