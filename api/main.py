@@ -9,8 +9,8 @@ from auth.auth import authenticate_request, unauthorised_response
 def snails():
     """GET end point to return snails information"""
 
-  #  if not authenticate_request():
-  #      return unauthorised_response()
+    if not authenticate_request():
+       return unauthorised_response()
 
     snail = Snail()
     query_response = snail.get_snail(1)
@@ -32,6 +32,9 @@ def snails():
 @app.route('/races')
 def races():
     """GET end point to return race information"""
+
+    if not authenticate_request():
+       return unauthorised_response()
 
     race = Race()
     race_query = race.get_race(1)
