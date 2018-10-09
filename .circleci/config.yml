@@ -36,6 +36,18 @@ jobs:
     steps:
       - checkout
 
+            # Download and cache dependencies
+      - restore_cache:
+          key: pip-dependency-cache
+
+      - run:
+          name: install dependencies
+          command: |
+            cd api
+            python3 -m venv venv
+            . venv/bin/activate
+            pip install -r requirements.txt
+
       - run:
           name: run tests
           command: |
