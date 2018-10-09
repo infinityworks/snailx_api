@@ -12,6 +12,7 @@ class MockSnail:
 
 
 class TestEndpoints(TestCase):
+
     def test_races_returns_races(self):
         result = main.races()
 
@@ -44,11 +45,13 @@ class TestEndpoints(TestCase):
         expected_result = {
             "id_race": 1,
             "snails": [
-                {"id_snail": 1, "position_snail:": 3, "time_snail": 600, "DNF": False},
-                {"id_snail": 2, "position_snail:": 2, "time_snail": 500, "DNF": False},
-                {"id_snail": 3, "position_snail:": 1, "time_snail": 400, "DNF": False},
+                {"id_snail": 1, "position_snail:": 3,
+                    "time_snail": 600, "DNF": False},
+                {"id_snail": 2, "position_snail:": 2,
+                    "time_snail": 500, "DNF": False},
+                {"id_snail": 3, "position_snail:": 1,
+                    "time_snail": 400, "DNF": False},
             ]
         }
 
         self.assertEqual(result, expected_result)
-
