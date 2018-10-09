@@ -1,6 +1,7 @@
 import unittest
 from tests import test_main, test_auth, test_auth_endpoint, test_snails_endpoint
 import xmlrunner
+import sys
 
 # initialize the test suite
 loader = unittest.TestLoader()
