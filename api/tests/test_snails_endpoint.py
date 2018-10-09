@@ -28,7 +28,7 @@ class TestSnailsEndpoint(unittest.TestCase):
         #     expected_result = {'id': 1, 'name': 'Terry',
         #                        'age': 13, 'trainer': {'id': 17, 'name': 'gazza'}}
         #     self.assertEqual(response, expected_result)
-        self.pass()
+        self.assertFalse(False)
 
 
 if __name__ == '__main__':
