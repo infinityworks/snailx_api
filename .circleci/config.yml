@@ -54,6 +54,10 @@ jobs:
             cd api
             . venv/bin/activate
             python test_runner.py
+            ls
+
+      - store_test_results:
+        path: api/test-reports
 
       - store_artifacts:
           path: test-reports
