@@ -1,7 +1,7 @@
 import sys
 sys.path.insert(0, '/vagrant/repos/snailx_api/api')
 from globals.globals import app
-from db.models import Snail
+from db.models import Snail, Race, RaceParticipants
 from auth.auth import authenticate_request, unauthorised_response
 
 
@@ -9,8 +9,8 @@ from auth.auth import authenticate_request, unauthorised_response
 def snails():
     """GET end point to return snails information"""
 
-    if not authenticate_request():
-        return unauthorised_response()
+  #  if not authenticate_request():
+  #      return unauthorised_response()
 
     snail = Snail()
     query_response = snail.get_snail(1)
@@ -19,10 +19,8 @@ def snails():
         json = {
             "id": query_response.id,
             "name": query_response.name,
-            "age": query_response.age,
             "trainer": {
-                "id": 17,
-                "name": "gazza"
+                "id": query_response.trainer_id,
             }
         }
 
@@ -34,13 +32,30 @@ def snails():
 @app.route('/races')
 def races():
     """GET end point to return race information"""
-    return {
-        "id": 1,
-        "date": "15:8:2018",
-        "status": 3,
-        "id_round": 1,
-        "id_snails": [1, 2, 3, 4, 5]
+
+    race = Race()
+    race_query = race.get_race(1)
+    # Get the results of RaceParticipants.race_id == race_query.id
+    all_race_participants = RaceParticipants()
+    race_participants = all_race_participants.get_race_participants_race_id(race_query.id)
+
+    if race_query:
+        # creates a list to be populated by the snail ids in the race being queried.
+        snails_id_list = []
+        # loops over the race participants with the current race id
+        for row in race_participants:
+            snails_id_list.append(row.id_snail)
+        json = {
+            "id": race_query.id,
+            "date": race_query.date,
+            "status": race_query.status,
+            "id_round": race_query.id_round,
+            # TODO iterate over snails
+            "id_snails": snails_id_list
     }
+        return json
+
+    return 404
 
 
 @app.route('/rounds')
