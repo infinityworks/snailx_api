@@ -15,4 +15,6 @@ suite.addTests(loader.loadTestsFromModule(test_auth_endpoint))
 # initialize a runner, pass it your suite and run it
 # runner = unittest.TextTestRunner(verbosity=3)
 runner = xmlrunner.XMLTestRunner(output='test-reports/unittest')
-result = runner.run(suite)
+
+ret = not runner.run(suite).wasSuccessful()
+sys.exit(ret)
