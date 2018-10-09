@@ -30,7 +30,7 @@ TBD
 
 ## Deployment
 
-TBD
+CircleCI
 
 ## Built With
 
