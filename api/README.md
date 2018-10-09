@@ -1,3 +1,5 @@
+[![CircleCI](https://circleci.com/gh/infinityworks/snailx_api/tree/develop.svg?style=svg)](https://circleci.com/gh/infinityworks/snailx_api/tree/develop)
+
 # SnailX API
 
 External team API for the SnailX project.
@@ -26,7 +28,7 @@ TBD
 
 ## Running the Tests
 
-TBD
+- Run ```make test```
 
 ## Deployment
 
