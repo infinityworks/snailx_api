@@ -1,4 +1,4 @@
-from flask import Blueprint, request, make_response, jsonify
+from flask import Blueprint, request, make_response
 import datetime
 import jwt
 from flask import current_app as app

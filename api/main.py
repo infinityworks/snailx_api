@@ -1,6 +1,9 @@
+import sys
+sys.path.insert(0, '/vagrant/repos/snailx_api/api')
 from globals.globals import app
-from db.models import Snail
+from db.models import Snail, Trainer
 from auth.auth import authenticate_request, unauthorised_response
+from flask_api import status
 
 
 @app.route('/snails')
@@ -11,22 +14,25 @@ def snails():
         return unauthorised_response()
 
     snail = Snail()
-    query_response = snail.get_snail(1)
+    query_response = snail.get_all_snails()
 
     if query_response:
-        json = {
-            "id": query_response.id,
-            "name": query_response.name,
-            "age": query_response.age,
-            "trainer": {
-                "id": 17,
-                "name": "gazza"
-            }
-        }
+        trainer = Trainer()
+        json = []
+        for row in query_response:
+            query_response_trainer = trainer.get_trainer(row.trainer_id)
+            json.append({
+                "id": row.id,
+                "name": row.name,
+                "trainer": {
+                    "id": query_response_trainer.id,
+                    "name": query_response_trainer.name
+                }
+            })
 
         return json
 
-    return 404
+    return status.HTTP_404_NOT_FOUND
 
 
 @app.route('/races')
