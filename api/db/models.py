@@ -64,3 +64,6 @@ class RaceResult(db.Model):
 
     def get_race_result(self, id):
         return self.query.filter_by(id=id).first()
+
+    def get_all_race_results(self):
+        return self.query.all()

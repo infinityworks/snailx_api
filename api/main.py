@@ -1,5 +1,5 @@
 from globals.globals import app
-from db.models import Snail
+from db.models import Snail, RaceResult
 from auth.auth import authenticate_request, unauthorised_response
 from flask import request, make_response
 
@@ -57,14 +57,39 @@ def rounds():
 @app.route('/races/results')
 def results():
     """GET end point to return results"""
-    return {
-        "id_race": 1,
-        "snails": [
-            {"id_snail": 1, "position_snail:": 3, "time_snail": 600, "DNF": False},
-            {"id_snail": 2, "position_snail:": 2, "time_snail": 500, "DNF": False},
-            {"id_snail": 3, "position_snail:": 1, "time_snail": 400, "DNF": False},
-        ]
-    }
+
+    if not authenticate_request():
+        return unauthorised_response()
+
+    result = RaceResult()
+    query_response = result.get_all_race_results()
+
+    print(query_response)
+
+    # if query_response:
+    #     json = {
+    #         "id": query_response.id,
+    #         "name": query_response.name,
+    #         "age": query_response.age,
+    #         "trainer": {
+    #             "id": 17,
+    #             "name": "gazza"
+    #         }
+    #     }
+
+    # return query_response
+
+    # return 404
+
+
+    # return {
+    #     "id_race": 1,
+    #     "snails": [
+    #         {"id_snail": 1, "position_snail:": 3, "time_snail": 600, "DNF": False},
+    #         {"id_snail": 2, "position_snail:": 2, "time_snail": 500, "DNF": False},
+    #         {"id_snail": 3, "position_snail:": 1, "time_snail": 400, "DNF": False}
+    #     ]
+    # }
 
 
 if __name__ == '__main__':
