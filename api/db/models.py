@@ -28,8 +28,8 @@ class Snail(db.Model):
 
 class RaceParticipants(db.Model):
     id = db.Column(db.Integer(), primary_key=True, autoincrement=True)
-    id_snail = db.Column(db.Integer(), db.ForeignKey("snail.id"), nullable=False)
-    id_race = db.Column(db.Integer(), db.ForeignKey("race.id"), nullable=False)
+    id_snail = db.Column(db.Integer(), db.ForeignKey("snail.id"))
+    id_race = db.Column(db.Integer(), db.ForeignKey("race.id"))
 
     def __repr__(self):
         return "<Race Participants\nid: {}\n snail_id: {}\n race_id: {}>".format(self.id, self.snail_id, self.race_id)
@@ -42,7 +42,7 @@ class Race(db.Model):
     id = db.Column(db.Integer(), primary_key=True, autoincrement=True)
     date = db.Column(db.DateTime(), nullable=False)
     status = db.Column(db.String(), nullable=False)
-    id_round = db.Column(db.Integer(), db.ForeignKey("round.id"), nullable=False)
+    id_round = db.Column(db.Integer(), db.ForeignKey("round.id"))
 
     def __repr__(self):
         return "<Race\nid: {}\n date: {}\n status: {}\n round_id: {}>".format(self.id, self.date, self.status,
@@ -68,8 +68,8 @@ class RaceResult(db.Model):
     id = db.Column(db.Integer(), primary_key=True, autoincrement=True)
     position = db.Column(db.Integer(), nullable=False)
     time_to_finish = db.Column(db.DateTime(), nullable=False)
-    did_not_finish = db.Column(db.String(3))
-    id_race_participants = db.Column(db.Integer(), db.ForeignKey("race_participants.id"), nullable=False)
+    did_not_finish = db.Column(db.Boolean(), nullable=False)
+    id_race_participants = db.Column(db.Integer(), db.ForeignKey("race_participants.id"))
 
     def __repr__(self):
         return "<Race Result\nid: {}\n position: {}\n time_to_finish: {}\n did_not_finish: {}\n race_participants_id: {}>".format(

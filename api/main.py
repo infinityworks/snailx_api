@@ -1,3 +1,5 @@
+import sys
+sys.path.insert(0, '/vagrant/repos/snailx_api/api')
 from globals.globals import app
 from db.models import Snail
 from auth.auth import authenticate_request, unauthorised_response
