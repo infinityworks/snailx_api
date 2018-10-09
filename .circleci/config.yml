@@ -60,8 +60,7 @@ jobs:
           path: api/test-reports
 
       - store_artifacts:
-          path: test-reports
-          destination: test-reports
+          path: api/test-reports
 
 workflows:
   version: 2
