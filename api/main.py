@@ -1,7 +1,6 @@
 from globals.globals import app
 from db.models import Snail
 from auth.auth import authenticate_request, unauthorised_response
-from flask import request, make_response
 
 
 @app.route('/snails')
