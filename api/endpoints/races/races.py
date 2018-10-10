@@ -27,8 +27,6 @@ def races_endpoint():
         # creates a list to be populated by the snail ids in the race being queried.
             race_participants = all_race_participants.get_race_participants_race_id(each_race.id)
             snails_id_list = []
-            print(each_race.id)
-            print(race_participants)
 
             # loops over the race participants with the current race id
             for row in race_participants:

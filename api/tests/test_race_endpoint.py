@@ -77,8 +77,5 @@ class TestRaceEndpoint(TestCase):
             response = client.get('/races')
             self.assertTrue(status.is_client_error(response.status_code))
 
-
-
-
 if __name__ == '__main__':
     unittest.main()
