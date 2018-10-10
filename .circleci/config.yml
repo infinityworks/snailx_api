@@ -6,14 +6,7 @@ version: 2
 jobs:
   build:
     docker:
-      # specify the version you desire here
-      # use `-browsers` prefix for selenium tests, e.g. `3.6.1-browsers`
       - image: circleci/python:3.6.1
-      
-      # Specify service dependencies here if necessary
-      # CircleCI maintains a library of pre-built images
-      # documented at https://circleci.com/docs/2.0/circleci-images/
-      # - image: circleci/postgres:9.4
 
     working_directory: ~/repos
 
@@ -23,8 +16,6 @@ jobs:
       # Download and cache dependencies
       - restore_cache:
           key: pip-dependency-cache
-          paths:
-            - api/requirements.txt
 
       - run:
           name: install dependencies
@@ -38,7 +29,25 @@ jobs:
           key: pip-dependency-cache
           paths:
             - api/requirements.txt
-        
+
+  test:
+    docker:
+      - image: circleci/python:3.6.1
+    steps:
+      - checkout
+
+            # Download and cache dependencies
+      - restore_cache:
+          key: pip-dependency-cache
+
+      - run:
+          name: install dependencies
+          command: |
+            cd api
+            python3 -m venv venv
+            . venv/bin/activate
+            pip install -r requirements.txt
+
       - run:
           name: run tests
           command: |
@@ -46,7 +55,18 @@ jobs:
             . venv/bin/activate
             python test_runner.py
 
+      - store_test_results:
+          path: api/test-reports
+
       - store_artifacts:
-          path: test-reports
-          destination: test-reports
-          
+          path: api/test-reports
+          destination: api/test-reports
+
+workflows:
+  version: 2
+  build_and_test:
+    jobs:
+      - build
+      - test:
+          requires:
+            - build

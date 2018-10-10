@@ -1,5 +1,3 @@
-import sys
-sys.path.insert(0, '/vagrant/repos/snailx_api/api')
 from globals.globals import db
 
 
@@ -24,6 +22,9 @@ class Snail(db.Model):
 
     def get_snail(self, id):
         return self.query.filter_by(id=id).first()
+
+    def get_all_snails(self):
+        return self.query.all()
 
 
 class RaceParticipants(db.Model):

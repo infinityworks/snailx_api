@@ -1,32 +1,9 @@
 import sys
 sys.path.insert(0, '/vagrant/repos/snailx_api/api')
 from globals.globals import app
-from db.models import Snail, Race, RaceParticipants
+from db.models import Snail, Trainer
 from auth.auth import authenticate_request, unauthorised_response
-
-
-@app.route('/snails')
-def snails():
-    """GET end point to return snails information"""
-
-    if not authenticate_request():
-       return unauthorised_response()
-
-    snail = Snail()
-    query_response = snail.get_snail(1)
-
-    if query_response:
-        json = {
-            "id": query_response.id,
-            "name": query_response.name,
-            "trainer": {
-                "id": query_response.trainer_id,
-            }
-        }
-
-        return json
-
-    return 404
+from flask_api import status
 
 
 @app.route('/races')
