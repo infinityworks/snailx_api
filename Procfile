@@ -1,1 +1,1 @@
-web: python api/main.py
+web: gunicorn --bind 0.0.0.0:8000 api/wsgi
