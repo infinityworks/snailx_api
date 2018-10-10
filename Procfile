@@ -1,1 +1,1 @@
-web: gunicorn --bind 0.0.0.0:8000 --pythonpath api/ wsgi
+web: gunicorn --pythonpath api/ wsgi
