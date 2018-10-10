@@ -1,6 +1,4 @@
 from unittest import TestCase
-from unittest.mock import patch
-from db.models import Snail
 import main
 
 
@@ -12,7 +10,6 @@ class MockSnail:
 
 
 class TestEndpoints(TestCase):
-
     def test_races_returns_races(self):
         result = main.races()
 
