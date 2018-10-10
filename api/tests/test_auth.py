@@ -8,6 +8,7 @@ from unittest.mock import MagicMock, Mock
 
 from globals.globals import app
 
+
 class TestAuthBlueprint(unittest.TestCase):
 
     def setUp(self):
@@ -19,7 +20,8 @@ class TestAuthBlueprint(unittest.TestCase):
 
     def test_decode_auth_token_success(self):
         token = self.auth.encode_auth_token()
-        self.assertTrue(self.auth.decode_auth_token(token) == self.auth.HARDCODED_USER_ID)
+        self.assertTrue(self.auth.decode_auth_token(
+            token) == self.auth.HARDCODED_USER_ID)
 
     @mock.patch('auth.auth.Auth.decode_auth_token')
     def test_decode_auth_token_invalid(self, mock_auth_decode):
