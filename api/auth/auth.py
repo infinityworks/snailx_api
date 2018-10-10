@@ -2,24 +2,9 @@ from flask import Blueprint, request, make_response
 import datetime
 import jwt
 from flask import current_app as app
+from flask_api import status
 
-auth_blueprint = Blueprint('auth', __name__)
 
-
-@auth_blueprint.route('/auth/token')
-def auth_token():
-    """Endpoint to retrieve an Authorization token.
-
-    Returns:
-        JSON -- Containing 'token' key with corresponding Authorization token.
-    """
-
-    try:
-        auth = Auth(app)
-        token = auth.encode_auth_token()
-        return make_response({"token": token.decode('utf-8')}), 200
-    except Exception as e:
-        return e
 
 class Auth:
 
@@ -81,9 +66,9 @@ class Auth:
         return False
 
 
-    def unauthorised_response(self):
+    def unauthorized_response(self):
         responseObject = {
             'status': 'Failed',
             'message': 'Unauthorized'
         }
-        return make_response(responseObject), 401
+        return make_response(responseObject), status.HTTP_401_UNAUTHORIZED

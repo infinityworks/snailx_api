@@ -13,7 +13,7 @@ def snails_endpoint():
 
     auth = Auth(app)
     if not auth.authenticate_request():
-        return auth.unauthorised_response()
+        return auth.unauthorized_response()
 
     snail = Snail()
     query_response = snail.get_all_snails()

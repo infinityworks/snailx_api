@@ -5,6 +5,7 @@ import time
 from auth.auth import Auth
 from unittest import mock
 from unittest.mock import MagicMock, Mock
+from flask_api import status
 
 from globals.globals import app
 
