@@ -1,8 +1,7 @@
 import unittest
 from globals.globals import app
-from tests.test_auth import MockAuth
 from flask import jsonify
-from auth.auth import encode_auth_token
+from flask_api import status
 
 
 class TestAuthEndpoint(unittest.TestCase):
@@ -10,12 +9,17 @@ class TestAuthEndpoint(unittest.TestCase):
     def setUp(self):
         self.app = app.test_client()
 
-    def test_get_auth_token(self):
+    def test_auth_get_token_body(self):
         with self.app as client:
             response = client.get("/auth/token").get_json()
-
             expectedResponse = {'token': response['token']}
+
             self.assertEqual(response, expectedResponse)
+
+    def test_auth_get_token_status_code(self):
+        with self.app as client:
+            response = client.get("/auth/token")
+            self.assertTrue(status.is_success(response.status_code))
 
 
 if __name__ == '__main__':

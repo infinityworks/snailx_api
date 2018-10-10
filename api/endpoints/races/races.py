@@ -1,6 +1,7 @@
 from flask_api import status
-from auth.auth import authenticate_request, unauthorised_response
+from auth.auth import Auth
 from db.models import Snail, Trainer, Race, RaceParticipants
+from globals.globals import app
 from flask import Blueprint
 
 races_endpoint_blueprint = Blueprint('races', __name__)
@@ -10,8 +11,9 @@ races_endpoint_blueprint = Blueprint('races', __name__)
 def races_endpoint():
     """GET end point to return races information"""
 
-    if not authenticate_request():
-       return unauthorised_response()
+    auth = Auth(app)
+    if not auth.authenticate_request():
+        return auth.unauthorized_response()
 
     race = Race()
     race_query = race.get_all_races()
