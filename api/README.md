@@ -8,14 +8,6 @@ External team API for the SnailX project.
 
 These instructions will get you a copy of the project up and running on your local machine for development and testing purposes. See deployment for notes on how to deploy the project on a live system.
 
-### Prerequisites
-
-TBD
-
-### Installing
-
-TBD
-
 ### Setting up Dev Environment
 
 - Run ```make build```
@@ -29,14 +21,25 @@ TBD
 ## Running the Tests
 
 - Run ```make test```
+- Run ```make test-coverage``` to generate html report of test coverage.
+
+JUnit style XML reports for testing are generated/uploaded to CircleCI when the tests are executed by `make test`.
 
 ## Deployment
 
-CircleCI
+CircleCI + Heroku
+UAT: <https://dev-snailx-api.herokuapp.com/>
 
 ## Built With
 
-* TBD
+* flask
+* flask_api
+* flask-sqlalchemy
+* flask-migrate
+* pyjwt
+* coverage
+* unittest-xml-reporting
+* gunicorn
 
 ## Versioning
 

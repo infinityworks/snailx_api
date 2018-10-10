@@ -4,6 +4,7 @@ from globals.globals import app
 from db.models import Snail, Trainer
 from auth.auth import authenticate_request, unauthorised_response
 from flask_api import status
+import os
 
 
 @app.route('/races')
@@ -44,4 +45,5 @@ def results():
 
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', debug=True)
+    port = int(os.environ.get('PORT', 5000))
+    app.run(host='0.0.0.0', port=port)
