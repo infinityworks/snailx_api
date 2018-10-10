@@ -46,6 +46,17 @@ class TestRaceEndpoint(TestCase):
             ]
         self.assertEqual(result, expected_result)
 
+    @mock.patch('db.models.Race.get_all_races', MagicMock(return_value=[MockRace(1, "2018-10-10 10:00:00", "RAINED OFF", 1)]))
+    @mock.patch('db.models.RaceParticipants.get_race_participants_race_id', MagicMock(return_value=[MockRaceParticipants(1,2,1), MockRaceParticipants(2,1,1)]))
+    def test_races_authorized_status_code(self):
+        with self.client as client:
+            response = client.get("/auth/token")
+            token = response.get_json()['token']
+            headers = {'Authorization': token}
+            response = client.get('/races', headers=headers)
+
+            self.assertTrue(status.is_success(response.status_code))
+
     @mock.patch('db.models.Race.get_all_races', MagicMock(return_value=None))
     def test_races_no_data_in_db_404(self):
         with self.client as client:
