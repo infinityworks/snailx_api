@@ -56,6 +56,7 @@ def rounds():
     }
 
 
+"""Results Section"""
 @app.route('/races/results')
 def results():
     """GET end point to return results"""
@@ -63,8 +64,10 @@ def results():
     if not authenticate_request():
         return unauthorised_response()
 
-    result = RaceResult()
-    query_response = result.get_all_race_results()
+    return results_json(results_from_db())
+
+
+def results_json(query_response):
 
     print("QUERY!! " + str(query_response))
 
@@ -87,6 +90,14 @@ def results():
         array.append(json)
 
     return array
+
+
+def results_from_db():
+    result = RaceResult()
+    query_response = result.get_all_race_results()
+
+    return query_response
+
 
 
     # return {
