@@ -1,4 +1,4 @@
-from flask import Blueprint, request, make_response, jsonify
+from flask import Blueprint, request, make_response
 import datetime
 import jwt
 from flask import current_app as app
@@ -10,7 +10,7 @@ HARDCODED_USER_ID = 1
 @auth_blueprint.route('/auth/token')
 def auth_token():
     """[Endpoint to retrieve an Authorization token.]
-    
+
     Returns:
         [JSON] -- [Containing 'token' key with corresponding Authorization token.]
     """
@@ -43,13 +43,13 @@ def encode_auth_token():
     return token
 
 
-#TODO: change to use user ids and not hardcoded single user.
+# TODO: change to use user ids and not hardcoded single user.
 def decode_auth_token(auth_token):
     """[Decodes an API auth token.]
-    
+
     Arguments:
         auth_token {[string]} -- [The string token provided as in Authorization header.]
-    
+
     Returns:
         [int] -- [The user_id of the token.]
     """
