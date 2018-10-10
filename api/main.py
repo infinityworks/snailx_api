@@ -1,22 +1,9 @@
 import sys
 sys.path.insert(0, '/vagrant/repos/snailx_api/api')
 from globals.globals import app
-from db.models import Snail, Trainer
+from db.models import Snail, Trainer, Race, RaceParticipants
 from flask_api import status
 import os
-
-
-@app.route('/races')
-def races():
-    """GET end point to return race information"""
-    return {
-        "id": 1,
-        "date": "15:8:2018",
-        "status": 3,
-        "id_round": 1,
-        "id_snails": [1, 2, 3, 4, 5]
-    }
-
 
 @app.route('/rounds')
 def rounds():
