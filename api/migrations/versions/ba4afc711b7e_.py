@@ -1,8 +1,8 @@
 """empty message
 
-Revision ID: 3071ba6d1006
+Revision ID: ba4afc711b7e
 Revises: 
-Create Date: 2018-10-09 08:51:25.261605
+Create Date: 2018-10-10 11:16:48.261567
 
 """
 from alembic import op
@@ -10,7 +10,7 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision = '3071ba6d1006'
+revision = 'ba4afc711b7e'
 down_revision = None
 branch_labels = None
 depends_on = None
@@ -33,7 +33,7 @@ def upgrade():
     sa.Column('id', sa.Integer(), autoincrement=True, nullable=False),
     sa.Column('date', sa.DateTime(), nullable=False),
     sa.Column('status', sa.String(), nullable=False),
-    sa.Column('id_round', sa.Integer(), nullable=False),
+    sa.Column('id_round', sa.Integer(), nullable=True),
     sa.ForeignKeyConstraint(['id_round'], ['round.id'], ),
     sa.PrimaryKeyConstraint('id')
     )
@@ -46,8 +46,8 @@ def upgrade():
     )
     op.create_table('race_participants',
     sa.Column('id', sa.Integer(), autoincrement=True, nullable=False),
-    sa.Column('id_snail', sa.Integer(), nullable=False),
-    sa.Column('id_race', sa.Integer(), nullable=False),
+    sa.Column('id_snail', sa.Integer(), nullable=True),
+    sa.Column('id_race', sa.Integer(), nullable=True),
     sa.ForeignKeyConstraint(['id_race'], ['race.id'], ),
     sa.ForeignKeyConstraint(['id_snail'], ['snail.id'], ),
     sa.PrimaryKeyConstraint('id')
@@ -56,8 +56,8 @@ def upgrade():
     sa.Column('id', sa.Integer(), autoincrement=True, nullable=False),
     sa.Column('position', sa.Integer(), nullable=False),
     sa.Column('time_to_finish', sa.DateTime(), nullable=False),
-    sa.Column('did_not_finish', sa.String(length=3), nullable=True),
-    sa.Column('id_race_participants', sa.Integer(), nullable=False),
+    sa.Column('did_not_finish', sa.Boolean(), nullable=False),
+    sa.Column('id_race_participants', sa.Integer(), nullable=True),
     sa.ForeignKeyConstraint(['id_race_participants'], ['race_participants.id'], ),
     sa.PrimaryKeyConstraint('id')
     )

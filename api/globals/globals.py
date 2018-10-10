@@ -14,7 +14,8 @@ migrate = Migrate(app, db)
 
 
 from endpoints.snails.snails import snails_endpoint_blueprint
-
+from endpoints.races.races import races_endpoint_blueprint
 
 app.register_blueprint(auth_blueprint)
 app.register_blueprint(snails_endpoint_blueprint)
+app.register_blueprint(races_endpoint_blueprint)
