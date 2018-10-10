@@ -4,7 +4,6 @@ import jwt
 from flask import current_app as app
 
 auth_blueprint = Blueprint('auth', __name__)
-HARDCODED_USER_ID = 1
 
 
 @auth_blueprint.route('/auth/token')
@@ -27,6 +26,7 @@ class Auth:
     def __init__(self, app):
         self.app = app
         self.secret = app.config.get('SECRET_KEY')
+        self.HARDCODED_USER_ID = 1
         self.expired_token = 'Signature expired. Please log in again.'
         self.invalid_token ='Invalid token. Please log in again.'
         self.auth_header_name = 'Authorization'
@@ -41,7 +41,7 @@ class Auth:
         payload = {
             'exp': datetime.datetime.utcnow() + datetime.timedelta(days=30),
             'iat': datetime.datetime.utcnow(),
-            'sub': HARDCODED_USER_ID
+            'sub': self.HARDCODED_USER_ID
         }
 
         token = jwt.encode(
@@ -63,7 +63,7 @@ class Auth:
         """
 
         try:
-            payload = jwt.decode(auth_token, app.config.get('SECRET_KEY'))
+            payload = jwt.decode(auth_token, self.secret)
             return payload['sub']
         except jwt.ExpiredSignatureError:
             return self.expired_token
@@ -76,7 +76,7 @@ class Auth:
         if req_token:
             req_user_id = self.decode_auth_token(req_token)
             # hardcoded single user id for mvp
-            if req_user_id == HARDCODED_USER_ID:
+            if req_user_id == self.HARDCODED_USER_ID:
                 return True
         return False
 
