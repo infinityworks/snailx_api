@@ -1,5 +1,3 @@
-import sys
-sys.path.insert(0, '/vagrant/repos/snailx_api/api')
 from globals.globals import db
 
 
@@ -17,13 +15,16 @@ class Trainer(db.Model):
 class Snail(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(12), nullable=False)
-    trainer_id = db.Column(db.Integer, db.ForeignKey('trainer.id'), nullable=False)
+    trainer_id = db.Column(db.Integer, db.ForeignKey('trainer.id'))
 
     def __repr__(self):
         return "<Snail\nid: {}\n name: {}\n trainer_id: {}>".format(self.id, self.name, self.trainer_id)
 
     def get_snail(self, id):
         return self.query.filter_by(id=id).first()
+
+    def get_all_snails(self):
+        return self.query.all()
 
 
 class RaceParticipants(db.Model):
