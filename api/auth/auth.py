@@ -8,10 +8,10 @@ auth_blueprint = Blueprint('auth', __name__)
 
 @auth_blueprint.route('/auth/token')
 def auth_token():
-    """[Endpoint to retrieve an Authorization token.]
+    """Endpoint to retrieve an Authorization token.
 
     Returns:
-        [JSON] -- [Containing 'token' key with corresponding Authorization token.]
+        JSON -- Containing 'token' key with corresponding Authorization token.
     """
 
     try:
@@ -35,7 +35,7 @@ class Auth:
         """
         Generates an API auth token.
         Returns:
-            [bytes] -- [auth token]
+            bytes -- auth token
         """
 
         payload = {
@@ -53,13 +53,13 @@ class Auth:
 
     # TODO: change to use user ids and not hardcoded single user.
     def decode_auth_token(self, auth_token):
-        """[Decodes an API auth token.]
+        """Decodes an API auth token.
 
         Arguments:
-            auth_token {[string]} -- [The string token provided as in Authorization header.]
+            auth_token {string} -- The string token provided as in Authorization header.
 
         Returns:
-            [int] -- [The user_id of the token.]
+            int -- The user_id of the token.
         """
 
         try:
