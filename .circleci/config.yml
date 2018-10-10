@@ -50,7 +50,7 @@ jobs:
           name: run tests
           command: |
             cd api
-            . venv/bin/activate
+            . /venv/bin/activate
             python test_runner.py
 
       - store_test_results:
