@@ -1,4 +1,5 @@
 from flask import Blueprint, make_response
+from flask_api import status
 from auth.auth import Auth
 from globals.globals import app
 
@@ -16,6 +17,6 @@ def auth_token():
     try:
         auth = Auth(app)
         token = auth.encode_auth_token()
-        return make_response({"token": token.decode('utf-8')}), 200
+        return make_response({"token": token.decode('utf-8')}), status.HTTP_200_OK
     except Exception as e:
         return e
