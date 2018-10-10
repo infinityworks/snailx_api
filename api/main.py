@@ -1,7 +1,9 @@
+import sys
+sys.path.insert(0, '/vagrant/repos/snailx_api/api')
+
 from globals.globals import app
 from db.models import Snail, RaceResult
 from auth.auth import authenticate_request, unauthorised_response
-from flask import request, make_response
 
 
 @app.route('/snails')
@@ -64,22 +66,27 @@ def results():
     result = RaceResult()
     query_response = result.get_all_race_results()
 
-    print(query_response)
+    print("QUERY!! " + str(query_response))
 
-    # if query_response:
-    #     json = {
-    #         "id": query_response.id,
-    #         "name": query_response.name,
-    #         "age": query_response.age,
-    #         "trainer": {
-    #             "id": 17,
-    #             "name": "gazza"
-    #         }
-    #     }
+    array = []
 
-    # return query_response
+    for query in query_response:
 
-    # return 404
+        if query.did_not_finish == 'False':
+            dnf = False
+        if query.did_not_finish == 'True':
+            dnf = True
+
+        json = {
+            "id_snail": query.id,
+            "position_snail": query.position,
+            "time_snail": query.time_to_finish,
+            "DNF": dnf
+        }
+
+        array.append(json)
+
+    return array
 
 
     # return {
