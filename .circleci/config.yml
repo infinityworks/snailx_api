@@ -49,8 +49,8 @@ jobs:
       - run:
           name: run tests
           command: |
+            . venv/bin/activate
             cd api
-            . /venv/bin/activate
             python test_runner.py
 
       - store_test_results:
