@@ -3,11 +3,11 @@ from unittest import TestCase
 from unittest import mock
 from unittest.mock import MagicMock
 
+from globals.globals import app
+from flask_api import status
+
 from endpoints.snails.snails import snails_endpoint
 
-
-def mock_authenticate_request(return_value):
-    return return_value
 
 class MockSnail:
     def __init__(self, id, name, trainer_id):
@@ -22,63 +22,71 @@ class MockTrainer:
         self.name = name
 
 
-class TestEndpoints(TestCase):
+class TestSnailsEndpoint(TestCase):
 
-    @mock.patch('endpoints.snails.snails.authenticate_request')
+    def setUp(self):
+        self.client = app.test_client()
+
     @mock.patch('db.models.Snail.get_all_snails', MagicMock(return_value=[MockSnail(1, "Lil Terry", 1), MockSnail(2, "Lil Gazza", 1)]))
     @mock.patch('db.models.Trainer.get_trainer', MagicMock(return_value=MockTrainer(1, "Terry")))
-    def test_snails_returns_snails(self, mock_auth_req):
-        mock_auth_req.return_value = MagicMock(response=True)
-        result = snails_endpoint()
+    def test_snails_authorized_body(self):
 
-        expected_result = [
-            {
-                "id": 1,
-                "name": "Lil Terry",
-                "trainer": {
+        with self.client as client:
+            response = client.get("/auth/token")
+            token = response.get_json()['token']
+            headers = {'Authorization': token}
+
+            result = client.get('/snails', headers=headers).get_json()
+            expected_result = [
+                {
                     "id": 1,
-                    "name": "Terry"
+                    "name": "Lil Terry",
+                    "trainer": {
+                        "id": 1,
+                        "name": "Terry"
+                    }
+                },
+                {
+                    "id": 2,
+                    "name": "Lil Gazza",
+                    "trainer": {
+                        "id": 1,
+                        "name": "Terry"
+                    }
                 }
-            },
-            {
-                "id": 2,
-                "name": "Lil Gazza",
-                "trainer": {
-                    "id": 1,
-                    "name": "Terry"
-                }
-            }
-        ]
+            ]
+            self.assertEqual(result, expected_result)
 
-        self.assertEqual(result, expected_result)
+    @mock.patch('db.models.Snail.get_all_snails', MagicMock(return_value=[MockSnail(1, "Lil Terry", 1), MockSnail(2, "Lil Gazza", 1)]))
+    @mock.patch('db.models.Trainer.get_trainer', MagicMock(return_value=MockTrainer(1, "Terry")))
+    def test_snails_authorized_status_code(self):
+        with self.client as client:
+            response = client.get("/auth/token")
+            token = response.get_json()['token']
+            headers = {'Authorization': token}
+            response = client.get('/snails', headers=headers)
 
-    @mock.patch('endpoints.snails.snails.authenticate_request')
+            self.assertTrue(status.is_success(response.status_code))
+
     @mock.patch('db.models.Snail.get_all_snails', MagicMock(return_value=None))
-    def test_snails_returns_404(self, mock_auth_req):
-        mock_auth_req.return_value = MagicMock(response=True)
-        result = snails_endpoint()
+    def test_snails_no_data_in_db_404(self):
+        with self.client as client:
+            response = client.get('/snails')
+            self.assertTrue(status.is_client_error(response.status_code))
 
-        expected_result = 404
+    def test_snails_unauthorized_body(self):
+        with self.client as client:
+            result = client.get('/snails').get_json()
+            expected_result = {
+                'status': 'Failed',
+                'message': 'Unauthorized'
+            }
+            self.assertEqual(result, expected_result)
 
-        self.assertEqual(result, expected_result)
-
-    @mock.patch('endpoints.snails.snails.authenticate_request')
-    @mock.patch('endpoints.snails.snails.unauthorised_response')
-    def test_snails_unauthorized(self, mock_auth_req, mock_unauthorized):
-        mock_auth_req.return_value = MagicMock(response=False)
-        mock_unauthorized.reeturn_value = MagicMock(response={
-            'status': 'Failed',
-            'message': 'Unauthorized'
-        })
-
-        result = snails_endpoint()
-
-        expected_result = {
-            'status': 'Failed',
-            'message': 'Unauthorized'
-        }
-
-        self.assertEqual(result, expected_result)
+    def test_snails_unauthorised_status_code(self):
+        with self.client as client:
+            response = client.get('/snails')
+            self.assertTrue(status.is_client_error(response.status_code))
 
 
 if __name__ == '__main__':

@@ -6,35 +6,6 @@ from auth.auth import authenticate_request, unauthorised_response
 from flask_api import status
 
 
-@app.route('/snails')
-def snails():
-    """GET end point to return snails information"""
-
-    if not authenticate_request():
-        return unauthorised_response()
-
-    snail = Snail()
-    query_response = snail.get_all_snails()
-
-    if query_response:
-        trainer = Trainer()
-        json = []
-        for row in query_response:
-            query_response_trainer = trainer.get_trainer(row.trainer_id)
-            json.append({
-                "id": row.id,
-                "name": row.name,
-                "trainer": {
-                    "id": query_response_trainer.id,
-                    "name": query_response_trainer.name
-                }
-            })
-
-        return json
-
-    return status.HTTP_404_NOT_FOUND
-
-
 @app.route('/races')
 def races():
     """GET end point to return race information"""

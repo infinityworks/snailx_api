@@ -3,10 +3,10 @@ from auth.auth import authenticate_request, unauthorised_response
 from db.models import Snail, Trainer
 from flask import Blueprint
 
-snails_endpoint_blueprint = Blueprint('snailshw', __name__)
+snails_endpoint_blueprint = Blueprint('snails', __name__)
 
 
-@snails_endpoint_blueprint.route('/snailshw')
+@snails_endpoint_blueprint.route('/snails')
 def snails_endpoint():
     """GET end point to return snails information"""
 
