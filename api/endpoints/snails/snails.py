@@ -1,7 +1,8 @@
 from flask_api import status
-from auth.auth import authenticate_request, unauthorised_response
+from auth.auth import Auth
 from db.models import Snail, Trainer
 from flask import Blueprint
+from globals.globals import app
 
 snails_endpoint_blueprint = Blueprint('snails', __name__)
 
@@ -10,8 +11,9 @@ snails_endpoint_blueprint = Blueprint('snails', __name__)
 def snails_endpoint():
     """GET end point to return snails information"""
 
-    if not authenticate_request():
-        return unauthorised_response()
+    auth = Auth(app)
+    if not auth.authenticate_request():
+        return auth.unauthorised_response()
 
     snail = Snail()
     query_response = snail.get_all_snails()
