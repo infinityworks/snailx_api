@@ -7,7 +7,6 @@ from unittest import mock
 from unittest.mock import MagicMock, Mock
 
 from globals.globals import app
-        # 
 
 class TestAuthBlueprint(unittest.TestCase):
 
