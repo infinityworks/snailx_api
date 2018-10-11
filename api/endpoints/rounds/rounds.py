@@ -8,7 +8,7 @@ rounds_endpoint_blueprint = Blueprint('rounds', __name__)
 
 
 @rounds_endpoint_blueprint.route('/rounds')
-def snails_endpoint():
+def rounds_endpoint():
     """GET end point to return rounds information"""
 
     auth = Auth(app)
@@ -31,7 +31,7 @@ def snails_endpoint():
                     "name": row.name,
                     "start_date": row.start_date,
                     "end_date": row.end_date,
-                    "races": [race_id for race_id in race_ids]
+                    "races": race_ids
                 }
             )
         return json
