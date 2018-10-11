@@ -37,6 +37,7 @@ class RaceParticipants(db.Model):
 
     def get_race_participants(self, id):
         return self.query.filter_by(id=id).first()
+
     def get_race_participants_race_id(self, id_race):
         return self.query.filter_by(id_race=id_race).all()
 
@@ -53,6 +54,7 @@ class Race(db.Model):
 
     def get_race(self, id):
         return self.query.filter_by(id=id).first()
+
     def get_all_races(self):
         return self.query.all()
 
@@ -68,13 +70,17 @@ class Round(db.Model):
     def get_round(self, id):
         return self.query.filter_by(id=id).first()
 
+    def get_all_rounds(self):
+        return self.query.all()
+
 
 class RaceResult(db.Model):
     id = db.Column(db.Integer(), primary_key=True, autoincrement=True)
     position = db.Column(db.Integer(), nullable=False)
     time_to_finish = db.Column(db.DateTime(), nullable=False)
     did_not_finish = db.Column(db.Boolean(), nullable=False)
-    id_race_participants = db.Column(db.Integer(), db.ForeignKey("race_participants.id"))
+    id_race_participants = db.Column(
+        db.Integer(), db.ForeignKey("race_participants.id"))
 
     def __repr__(self):
         return "<Race Result\nid: {}\n position: {}\n time_to_finish: {}\n did_not_finish: {}\n race_participants_id: {}>".format(
