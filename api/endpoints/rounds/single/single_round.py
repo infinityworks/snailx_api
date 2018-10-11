@@ -28,21 +28,17 @@ def snails_endpoint(id):
     query_response = round_model.get_round(id)
 
     if query_response:
-        json = []
 
         race_model = Race()
         race_ids = race_model.get_round_race_ids(query_response.id)
 
-        json.append(
-            {
-                "id": query_response.id,
-                "name": query_response.name,
-                "start_date": query_response.start_date,
-                "end_date": query_response.end_date,
-                "races": race_ids
-            }
-        )
-        return json
+        return {
+            "id": query_response.id,
+            "name": query_response.name,
+            "start_date": query_response.start_date,
+            "end_date": query_response.end_date,
+            "races": race_ids
+        }
 
     return {
         'status': 'Failed',
