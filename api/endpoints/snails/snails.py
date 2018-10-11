@@ -34,4 +34,7 @@ def snails_endpoint():
 
         return json
 
-    return status.HTTP_404_NOT_FOUND
+    return {
+            'status': 'Failed',
+            'message': 'Snails not found'
+        }, status.HTTP_404_NOT_FOUND
