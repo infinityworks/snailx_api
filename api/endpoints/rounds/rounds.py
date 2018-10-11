@@ -23,7 +23,7 @@ def snails_endpoint():
 
         for row in query_response:
             race_model = Race()
-            races = race_model.get_round_races(row.id)
+            race_ids = race_model.get_round_race_ids(row.id)
 
             json.append(
                 {
@@ -31,7 +31,7 @@ def snails_endpoint():
                     "name": row.name,
                     "start_date": row.start_date,
                     "end_date": row.end_date,
-                    "races": [race.id for race in races]
+                    "races": [race_id for race_id in race_ids]
                 }
             )
         return json

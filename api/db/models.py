@@ -58,8 +58,8 @@ class Race(db.Model):
     def get_all_races(self):
         return self.query.all()
 
-    def get_round_races(self, id_round):
-        return self.query.filter_by(id_round=id_round).all()
+    def get_round_race_ids(self, id_round):
+        return self.query(Race.id).filter_by(id_round=id_round).all()
 
 
 class Round(db.Model):
