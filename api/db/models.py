@@ -11,6 +11,12 @@ class Trainer(db.Model):
     def get_trainer(self, id):
         return self.query.filter_by(id=id).first()
 
+    def add_trainer(self, id, name):
+        self.id = id
+        self.name = name
+        db.session.add(self)
+        db.session.commit()
+
 
 class Snail(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -26,6 +32,13 @@ class Snail(db.Model):
     def get_all_snails(self):
         return self.query.all()
 
+    def add_snail(self, id, name, trainer_id):
+        self.id = id
+        self.name = name
+        self.trainer_id = trainer_id
+        db.session.add(self)
+        db.session.commit()
+
 
 class RaceParticipants(db.Model):
     id = db.Column(db.Integer(), primary_key=True, autoincrement=True)
@@ -40,6 +53,13 @@ class RaceParticipants(db.Model):
 
     def get_race_participants_race_id(self, id_race):
         return self.query.filter_by(id_race=id_race).all()
+
+    def add_race_participants(self, id, id_snail, id_race):
+        self.id = id
+        self.id_snail = id_snail
+        self.id_race = id_race
+        db.session.add(self)
+        db.session.commit()
 
 
 class Race(db.Model):
@@ -61,6 +81,14 @@ class Race(db.Model):
     def get_round_race_ids(self, id_round):
         return db.session.query(Race.id).filter_by(id_round=id_round).all()
 
+    def add_race(self, id, date, status, id_round):
+        self.id = id
+        self.date = date
+        self.status = status
+        self.id_round = id_round
+        db.session.add(self)
+        db.session.commit()
+
 
 class Round(db.Model):
     id = db.Column(db.Integer(), primary_key=True, autoincrement=True)
@@ -77,6 +105,14 @@ class Round(db.Model):
     def get_all_rounds(self):
         return self.query.all()
 
+    def add_round(self, id, name, start_date, end_date):
+        self.id = id
+        self.name = name
+        self.start_date = start_date
+        self.end_date = end_date
+        db.session.add(self)
+        db.session.commit()
+
 
 class RaceResult(db.Model):
     id = db.Column(db.Integer(), primary_key=True, autoincrement=True)
@@ -92,3 +128,13 @@ class RaceResult(db.Model):
 
     def get_race_result(self, id):
         return self.query.filter_by(id=id).first()
+
+    def add_race_result(self, id, position, time_to_finish, did_not_finish, id_race_participants):
+        self.id = id
+        self.position = position
+        self.time_to_finish = time_to_finish
+        self.did_not_finish = did_not_finish
+        self.id_race_participants = id_race_participants
+        db.session.add(self)
+        db.session.commit()
+
