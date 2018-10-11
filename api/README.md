@@ -2,7 +2,7 @@
 
 # SnailX API
 
-External team API for the SnailX project.
+External team API for the SnailX project. (The best team.)
 
 ## Getting Started
 
