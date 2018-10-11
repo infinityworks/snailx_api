@@ -1,22 +1,9 @@
 import sys
 sys.path.insert(0, '/vagrant/repos/snailx_api/api')
 from globals.globals import app
-from db.models import Snail, Trainer
-from auth.auth import authenticate_request, unauthorised_response
+from db.models import Snail, Trainer, Race, RaceParticipants
 from flask_api import status
-
-
-@app.route('/races')
-def races():
-    """GET end point to return race information"""
-    return {
-        "id": 1,
-        "date": "15:8:2018",
-        "status": 3,
-        "id_round": 1,
-        "id_snails": [1, 2, 3, 4, 5]
-    }
-
+import os
 
 @app.route('/rounds')
 def rounds():
@@ -44,4 +31,5 @@ def results():
 
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', debug=True)
+    port = int(os.environ.get('PORT', 5000))
+    app.run(host='0.0.0.0', port=port)

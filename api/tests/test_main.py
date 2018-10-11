@@ -9,20 +9,6 @@ class MockSnail:
         self.age = age
 
 
-class TestEndpoints(TestCase):
-    def test_races_returns_races(self):
-        result = main.races()
-
-        expected_result = {
-            "id": 1,
-            "date": "15:8:2018",
-            "status": 3,
-            "id_round": 1,
-            "id_snails": [1, 2, 3, 4, 5]
-        }
-
-        self.assertEqual(result, expected_result)
-
     def test_rounds_returns_rounds(self):
         result = main.rounds()
 
