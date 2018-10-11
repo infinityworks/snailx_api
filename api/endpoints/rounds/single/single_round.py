@@ -37,7 +37,7 @@ def snails_endpoint(id):
             "name": query_response.name,
             "start_date": query_response.start_date,
             "end_date": query_response.end_date,
-            "races": race_ids
+            "races": [race_id.id for race_id in race_ids]
         }
 
     return {
