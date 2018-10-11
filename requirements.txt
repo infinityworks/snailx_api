@@ -5,3 +5,4 @@ flask-migrate==2.2.1
 pyjwt==1.4.2
 coverage==4.5.1
 unittest-xml-reporting==2.2.0
+gunicorn==19.9.0

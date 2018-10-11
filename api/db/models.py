@@ -1,5 +1,3 @@
-import sys
-sys.path.insert(0, '/vagrant/repos/snailx_api/api')
 from globals.globals import db
 
 
@@ -17,7 +15,7 @@ class Trainer(db.Model):
 class Snail(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(12), nullable=False)
-    trainer_id = db.Column(db.Integer, db.ForeignKey('trainer.id'), nullable=False)
+    trainer_id = db.Column(db.Integer, db.ForeignKey('trainer.id'))
 
     def __repr__(self):
         return "<Snail\nid: {}\n name: {}\n trainer_id: {}>".format(self.id, self.name, self.trainer_id)
@@ -25,31 +23,39 @@ class Snail(db.Model):
     def get_snail(self, id):
         return self.query.filter_by(id=id).first()
 
+    def get_all_snails(self):
+        return self.query.all()
+
 
 class RaceParticipants(db.Model):
     id = db.Column(db.Integer(), primary_key=True, autoincrement=True)
-    id_snail = db.Column(db.Integer(), db.ForeignKey("snail.id"), nullable=False)
-    id_race = db.Column(db.Integer(), db.ForeignKey("race.id"), nullable=False)
+    id_snail = db.Column(db.Integer(), db.ForeignKey("snail.id"))
+    id_race = db.Column(db.Integer(), db.ForeignKey("race.id"))
 
     def __repr__(self):
-        return "<Race Participants\nid: {}\n snail_id: {}\n race_id: {}>".format(self.id, self.snail_id, self.race_id)
+        return "<Race Participants\nid: {}\n snail_id: {}\n race_id: {}>".format(self.id, self.id_snail, self.id_race)
 
     def get_race_participants(self, id):
         return self.query.filter_by(id=id).first()
+
+    def get_race_participants_race_id(self, id_race):
+        return self.query.filter_by(id_race=id_race).all()
 
 
 class Race(db.Model):
     id = db.Column(db.Integer(), primary_key=True, autoincrement=True)
     date = db.Column(db.DateTime(), nullable=False)
     status = db.Column(db.String(), nullable=False)
-    id_round = db.Column(db.Integer(), db.ForeignKey("round.id"), nullable=False)
+    id_round = db.Column(db.Integer(), db.ForeignKey("round.id"))
 
     def __repr__(self):
         return "<Race\nid: {}\n date: {}\n status: {}\n round_id: {}>".format(self.id, self.date, self.status,
-                                                                              self.round_id)
+                                                                              self.id_round)
 
     def get_race(self, id):
         return self.query.filter_by(id=id).first()
+    def get_all_races(self):
+        return self.query.all()
 
 
 class Round(db.Model):
