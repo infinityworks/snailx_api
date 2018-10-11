@@ -35,8 +35,8 @@ def single_race_endpoint(id):
             "id_snails": snails_id_list
         })
         return json
-        
+
     return {
             'status': 'Failed',
-            'message': 'Snail not found'
+            'message': 'Race not found'
         }, status.HTTP_404_NOT_FOUND
