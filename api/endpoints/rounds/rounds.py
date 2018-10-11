@@ -1,6 +1,6 @@
 from flask_api import status
 from auth.auth import Auth
-from db.models import Round
+from db.models import Round, Race
 from flask import Blueprint
 from globals.globals import app
 
@@ -20,12 +20,18 @@ def snails_endpoint():
 
     if query_response:
         json = []
+
         for row in query_response:
+            race_model = Race()
+            races = race_model.get_round_races(row.id)
+
             json.append(
                 {
                     "id": row.id,
                     "name": row.name,
-                    "start_date": row.start_date
+                    "start_date": row.start_date,
+                    "end_date": row.end_date,
+                    "races": [race.id for race in races]
                 }
             )
         return json
