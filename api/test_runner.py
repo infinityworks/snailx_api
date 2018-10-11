@@ -1,5 +1,5 @@
 import unittest
-from tests import test_main, test_auth, test_auth_endpoint, test_snails_endpoint, test_races_endpoint
+from tests import test_main, test_auth, test_auth_endpoint, test_snails_endpoint, test_races_endpoint, test_single_race_endpoint
 import xmlrunner
 import sys
 
@@ -13,6 +13,7 @@ suite.addTests(loader.loadTestsFromModule(test_auth))
 suite.addTests(loader.loadTestsFromModule(test_snails_endpoint))
 suite.addTests(loader.loadTestsFromModule(test_races_endpoint))
 suite.addTests(loader.loadTestsFromModule(test_auth_endpoint))
+suite.addTests(loader.loadTestsFromModule(test_single_race_endpoint))
 
 # initialize a runner, pass it your suite and run it
 # runner = unittest.TextTestRunner(verbosity=3)

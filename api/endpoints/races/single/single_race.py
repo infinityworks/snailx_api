@@ -20,8 +20,6 @@ def single_race_endpoint(id):
 
     # Get the results of RaceParticipants.race_id == race_query.id
     single_race_participants = RaceParticipants().get_race_participants_race_id(id)
-    
-    #print(race_query)
 
     if single_race_query:
         json = []

@@ -6,7 +6,7 @@ from unittest.mock import MagicMock
 from globals.globals import app
 from flask_api import status
 
-from endpoints.races.races import races_endpoint
+from endpoints.races.single.single_race import single_race_endpoint
 
 
 class MockRace:
@@ -28,55 +28,54 @@ class TestRacesEndpoint(TestCase):
     def setUp(self):
         self.client = app.test_client()
 
-    @mock.patch('db.models.Race.get_all_races', MagicMock(return_value=[MockRace(1, "2018-10-10 10:00:00", "RAINED OFF", 1)]))
-    @mock.patch('db.models.RaceParticipants.get_race_participants_race_id', MagicMock(return_value=[MockRaceParticipants(1, 2, 1), MockRaceParticipants(2, 1, 1)]))
-    def test_races_authorized_body(self):
 
+    @mock.patch('db.models.Race.get_race', MagicMock(return_value=MockRace(1, "2018-10-10 10:00:00", "RAINED OFF", 1)))
+    @mock.patch('db.models.RaceParticipants.get_race_participants_race_id', MagicMock(return_value=[MockRaceParticipants(1, 2, 1), MockRaceParticipants(2, 1, 1)]))
+    def test_single_race_authorized_body(self):
         with self.client as client:
             response = client.get("/auth/token")
             token = response.get_json()['token']
             headers = {'Authorization': token}
+            result = client.get('/races/1', headers=headers).get_json()
+            expected_result = [{
+                "id": 1,
+                "date": "2018-10-10 10:00:00",
+                "status": "RAINED OFF",
+                "id_round": 1,
+                "id_snails": [2, 1]
+            }]
+            self.assertEqual(result, expected_result)
 
-        result = client.get('/races', headers=headers).get_json()
-        expected_result = [{
-            "id": 1,
-            "date": "2018-10-10 10:00:00",
-            "status": "RAINED OFF",
-            "id_round": 1,
-            "id_snails": [2, 1]
-        }
-        ]
-        self.assertEqual(result, expected_result)
 
-    @mock.patch('db.models.Race.get_all_races', MagicMock(return_value=[MockRace(1, "2018-10-10 10:00:00", "RAINED OFF", 1)]))
+    @mock.patch('db.models.Race.get_race', MagicMock(return_value=MockRace(1, "2018-10-10 10:00:00", "RAINED OFF", 1)))
     @mock.patch('db.models.RaceParticipants.get_race_participants_race_id', MagicMock(return_value=[MockRaceParticipants(1, 2, 1), MockRaceParticipants(2, 1, 1)]))
-    def test_races_authorized_status_code(self):
+    def test_single_race_authorized_status_code(self):
         with self.client as client:
             response = client.get("/auth/token")
             token = response.get_json()['token']
             headers = {'Authorization': token}
-            response = client.get('/races', headers=headers)
+            response = client.get('/races/1', headers=headers)
 
             self.assertTrue(status.is_success(response.status_code))
 
-    @mock.patch('db.models.Race.get_all_races', MagicMock(return_value=None))
-    def test_races_no_data_in_db_404(self):
+    @mock.patch('db.models.Race.get_race', MagicMock(return_value=None))
+    def test_single_race_no_data_in_db_404(self):
         with self.client as client:
-            response = client.get('/races')
+            response = client.get('/races/1')
             self.assertTrue(status.is_client_error(response.status_code))
 
-    def test_races_unauthorized_body(self):
+    def test_single_race_unauthorized_body(self):
         with self.client as client:
-            result = client.get('/races').get_json()
+            result = client.get('/races/1').get_json()
             expected_result = {
                 'status': 'Failed',
                 'message': 'Unauthorized'
             }
             self.assertEqual(result, expected_result)
 
-    def test_races_unauthorised_status_code(self):
+    def test_single_race_unauthorised_status_code(self):
         with self.client as client:
-            response = client.get('/races')
+            response = client.get('/races/1')
             self.assertTrue(status.is_client_error(response.status_code))
 
 
