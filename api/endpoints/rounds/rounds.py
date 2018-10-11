@@ -8,7 +8,7 @@ rounds_endpoint_blueprint = Blueprint('rounds', __name__)
 
 
 @rounds_endpoint_blueprint.route('/rounds')
-def snails_endpoint():
+def rounds_endpoint():
     """GET end point to return rounds information"""
 
     auth = Auth(app)
