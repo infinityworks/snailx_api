@@ -8,7 +8,6 @@ loader = unittest.TestLoader()
 suite = unittest.TestSuite()
 
 # add tests to the test suite
-suite.addTests(loader.loadTestsFromModule(test_main))
 suite.addTests(loader.loadTestsFromModule(test_auth))
 suite.addTests(loader.loadTestsFromModule(test_snails_endpoint))
 suite.addTests(loader.loadTestsFromModule(test_races_endpoint))
