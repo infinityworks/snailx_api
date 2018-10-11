@@ -31,7 +31,7 @@ def rounds_endpoint():
                     "name": row.name,
                     "start_date": row.start_date,
                     "end_date": row.end_date,
-                    "races": race_ids
+                    "races": [race_id.id for race_id in race_ids]
                 }
             )
         return json

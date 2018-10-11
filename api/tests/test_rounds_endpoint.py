@@ -13,14 +13,18 @@ class MockRound:
         self.name = name
         self.start_date = start_date
         self.end_date = end_date
-        # self.races = races
+
+
+class MockRaceId:
+    def __init__(self, id):
+        self.id = id
 
 
 def get_round_ids_side_effect(*id_round):
     if id_round[0] == 1:
-        return [1, 2, 3]
+        return [MockRaceId(1), MockRaceId(2), MockRaceId(3)]
     elif id_round[0] == 2:
-        return [4, 5, 6]
+        return [MockRaceId(4), MockRaceId(5), MockRaceId(6)]
 
 
 class TestRoundsEndpoint(TestCase):
