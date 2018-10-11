@@ -58,7 +58,17 @@ def rounds():
 
 """Results Section"""
 @app.route('/races/results')
-def results():
+def results_all():
+    """GET end point to return results"""
+
+    if not authenticate_request():
+        return unauthorised_response()
+
+    return results_json(results_from_db())
+
+
+@app.route('/races/results/{id}')
+def results_by_id():
     """GET end point to return results"""
 
     if not authenticate_request():
@@ -79,6 +89,8 @@ def results_json(query_response):
             dnf = False
         if query.did_not_finish == 'True':
             dnf = True
+        if query.did_not_finish == '':
+            dnf = False
 
         json = {
             "id_snail": query.id,

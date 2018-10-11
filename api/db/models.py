@@ -67,7 +67,7 @@ class Round(db.Model):
 class RaceResult(db.Model):
     id = db.Column(db.Integer(), primary_key=True, autoincrement=True)
     position = db.Column(db.Integer(), nullable=False)
-    time_to_finish = db.Column(db.DateTime(), nullable=False)
+    time_to_finish = db.Column(db.Integer(), nullable=True)
     did_not_finish = db.Column(db.String(3))
     id_race_participants = db.Column(db.Integer(), db.ForeignKey("race_participants.id"), nullable=False)
 
