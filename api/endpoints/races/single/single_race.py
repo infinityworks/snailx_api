@@ -18,13 +18,11 @@ def single_race_endpoint(id):
     race = Race()
     single_race_query = race.get_race(id)
 
-    # Get the results of RaceParticipants.race_id == race_query.id
     single_race_participants = RaceParticipants().get_race_participants_race_id(id)
 
     if single_race_query:
         json = []
 
-            # loops over the race participants with the current race id
         snails_id_list = []
         for row in single_race_participants:
             snails_id_list.append(row.id_snail)
@@ -37,5 +35,8 @@ def single_race_endpoint(id):
             "id_snails": snails_id_list
         })
         return json
-
-    return status.HTTP_404_NOT_FOUND
+        
+    return {
+            'status': 'Failed',
+            'message': 'Snail not found'
+        }, status.HTTP_404_NOT_FOUND
