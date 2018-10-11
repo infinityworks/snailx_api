@@ -1,5 +1,5 @@
 import unittest
-from tests import test_main, test_auth, test_auth_endpoint, test_snails_endpoint, test_races_endpoint, test_single_snail_endpoint
+from tests import test_auth, test_auth_endpoint, test_snails_endpoint, test_races_endpoint, test_single_snail_endpoint
 import xmlrunner
 import sys
 
