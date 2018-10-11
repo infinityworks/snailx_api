@@ -17,9 +17,11 @@ from endpoints.snails.snails import snails_endpoint_blueprint
 from endpoints.races.races import races_endpoint_blueprint
 from endpoints.snails.single.single_snail import single_snail_endpoint_blueprint
 from endpoints.rounds.rounds import rounds_endpoint_blueprint
+from endpoints.rounds.single.single_round import single_round_endpoint_blueprint
 
 app.register_blueprint(auth_endpoint_blueprint)
 app.register_blueprint(snails_endpoint_blueprint)
 app.register_blueprint(single_snail_endpoint_blueprint)
 app.register_blueprint(races_endpoint_blueprint)
 app.register_blueprint(rounds_endpoint_blueprint)
+app.register_blueprint(single_round_endpoint_blueprint)
