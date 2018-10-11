@@ -28,7 +28,6 @@ class TestRacesEndpoint(TestCase):
     def setUp(self):
         self.client = app.test_client()
 
-
     @mock.patch('db.models.Race.get_race', MagicMock(return_value=MockRace(1, "2018-10-10 10:00:00", "RAINED OFF", 1)))
     @mock.patch('db.models.RaceParticipants.get_race_participants_race_id', MagicMock(return_value=[MockRaceParticipants(1, 2, 1), MockRaceParticipants(2, 1, 1)]))
     def test_single_race_authorized_body(self):
