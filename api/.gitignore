@@ -110,4 +110,4 @@ venv.bak/
 .DS_Store
 
 #ignore vscode files
-*.vscode
+.vscode
