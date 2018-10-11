@@ -1,6 +1,6 @@
 from flask_api import status
 from auth.auth import Auth
-from db.models import Snail, Trainer, Race, RaceParticipants
+from db.models import Race, RaceParticipants
 from globals.globals import app
 from flask import Blueprint
 
@@ -17,20 +17,15 @@ def races_endpoint():
 
     race = Race()
     race_query = race.get_all_races()
-
-    # Get the results of RaceParticipants.race_id == race_query.id
     all_race_participants = RaceParticipants()
-    #print(race_query)
 
     if race_query:
         json = []
 
         for each_race in race_query:
-        # creates a list to be populated by the snail ids in the race being queried.
             race_participants = all_race_participants.get_race_participants_race_id(each_race.id)
             snails_id_list = []
 
-            # loops over the race participants with the current race id
             for row in race_participants:
                 snails_id_list.append(row.id_snail)
 
@@ -43,4 +38,7 @@ def races_endpoint():
             })
         return json
 
-    return status.HTTP_404_NOT_FOUND
+    return {
+            'status': 'Failed',
+            'message': 'Races not found'
+        }, status.HTTP_404_NOT_FOUND

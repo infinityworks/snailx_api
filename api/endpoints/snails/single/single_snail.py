@@ -4,37 +4,35 @@ from db.models import Snail, Trainer
 from flask import Blueprint
 from globals.globals import app
 
-snails_endpoint_blueprint = Blueprint('snails', __name__)
+single_snail_endpoint_blueprint = Blueprint('single_snail', __name__)
 
 
-@snails_endpoint_blueprint.route('/snails')
-def snails_endpoint():
-    """GET end point to return snails information"""
-
+@single_snail_endpoint_blueprint.route('/snails/<id>')
+def single_snail_endpoint(id):
+    """GET end point to return single snail information"""
     auth = Auth(app)
+
     if not auth.authenticate_request():
         return auth.unauthorized_response()
 
     snail = Snail()
-    query_response = snail.get_all_snails()
+    query_response = snail.get_snail(id)
 
-    if query_response:
+    if query_response is not None:
         trainer = Trainer()
-        json = []
-        for row in query_response:
-            query_response_trainer = trainer.get_trainer(row.trainer_id)
-            json.append({
-                "id": row.id,
-                "name": row.name,
+
+        query_response_trainer = trainer.get_trainer(query_response.trainer_id)
+
+        return {
+                "id": query_response.id,
+                "name": query_response.name,
                 "trainer": {
                     "id": query_response_trainer.id,
                     "name": query_response_trainer.name
                 }
-            })
-
-        return json
+            }
 
     return {
             'status': 'Failed',
-            'message': 'Snails not found'
+            'message': 'Snail not found'
         }, status.HTTP_404_NOT_FOUND
