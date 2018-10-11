@@ -18,7 +18,7 @@ def single_snail_endpoint(id):
     snail = Snail()
     query_response = snail.get_snail(id)
 
-    if query_response:
+    if query_response is not None:
         trainer = Trainer()
 
         query_response_trainer = trainer.get_trainer(query_response.trainer_id)
@@ -32,4 +32,7 @@ def single_snail_endpoint(id):
                 }
             }
 
-    return status.HTTP_404_NOT_FOUND
+    return {
+            'status': 'Failed',
+            'message': 'Snail not found'
+        }, status.HTTP_404_NOT_FOUND
