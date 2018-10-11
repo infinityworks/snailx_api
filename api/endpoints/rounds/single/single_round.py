@@ -42,5 +42,5 @@ def snails_endpoint(id):
 
     return {
         'status': 'Failed',
-        'message': 'Rounds not found'
+        'message': 'Round id: %s not found' % id
     }, status.HTTP_404_NOT_FOUND

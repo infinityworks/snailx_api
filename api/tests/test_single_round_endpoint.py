@@ -62,16 +62,25 @@ class TestSingleRoundEndpoint(TestCase):
 
             self.assertTrue(status.is_success(response.status_code))
 
-    @mock.patch('db.models.Race.get_round_race_ids',
-                MagicMock(side_effect=get_round_ids_side_effect))
-    @mock.patch('db.models.Round.get_round',
-                MagicMock(return_value=MockRound(1,
-                                                 "External",
-                                                 "Mon, 01 Oct 2018 10:00:00 GMT",
-                                                 "Mon, 01 Oct 2018 12:00:00 GMT")))
-    def test_single_round_no_data_in_db_404(self):
+    @mock.patch('db.models.Round.get_round', MagicMock(return_value=None))
+    def test_single_round_not_found_body(self):
         with self.client as client:
-            response = client.get('/rounds/1')
+            response = client.get("/auth/token")
+            token = response.get_json()['token']
+            headers = {'Authorization': token}
+
+            result = client.get('/rounds/1337', headers=headers).get_json()
+
+            expected_result = {
+                'status': 'Failed',
+                'message': 'Round id: 1337 not found'
+            }
+            self.assertEqual(result, expected_result)
+
+    @mock.patch('db.models.Round.get_round', MagicMock(return_value=None))
+    def test_single_round_not_found_status_code(self):
+        with self.client as client:
+            response = client.get('/rounds/1337')
             self.assertTrue(status.is_client_error(response.status_code))
 
     def test_single_round_unauthorized_body(self):
