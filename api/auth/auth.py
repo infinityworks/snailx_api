@@ -1,9 +1,7 @@
-from flask import Blueprint, request, make_response
+from flask import request, make_response
 import datetime
 import jwt
-from flask import current_app as app
 from flask_api import status
-
 
 
 class Auth:
@@ -55,7 +53,6 @@ class Auth:
         except jwt.InvalidTokenError:
             return self.invalid_token
 
-
     def authenticate_request(self):
         req_token = request.headers.get(self.auth_header_name)
         if req_token:
@@ -64,7 +61,6 @@ class Auth:
             if req_user_id == self.HARDCODED_USER_ID:
                 return True
         return False
-
 
     def unauthorized_response(self):
         responseObject = {
