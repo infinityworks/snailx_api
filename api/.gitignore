@@ -110,3 +110,9 @@ venv.bak/
 .DS_Store
 
 .idea/
+
+#ignore database
+*.db
+
+#ignore migrations directory
+migrations/
