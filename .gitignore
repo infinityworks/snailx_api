@@ -106,3 +106,15 @@ venv.bak/
 # vagrant
 *.vagrant
 
+#Mac OS .DS_Store
+.DS_Store
+
+.idea/
+
+#ignore database
+api/config/app.db
+
+#ignore migrations directory
+migrations/
+#ignore vscode files
+.vscode/
