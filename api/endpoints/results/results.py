@@ -10,7 +10,7 @@ results_endpoint_blueprint = Blueprint('results', __name__)
 
 @results_endpoint_blueprint.route('/results')
 def results_endpoint():
-    """GET end point to return races information"""
+    """GET end point to return results information"""
 
     auth = Auth(app)
     if not auth.authenticate_request():
