@@ -35,11 +35,14 @@ class RaceParticipants(db.Model):
     def __repr__(self):
         return "<Race Participants\nid: {}\n snail_id: {}\n race_id: {}>".format(self.id, self.id_snail, self.id_race)
 
-    def get_race_participants(self, id):
+    def get_race_participant(self, id):
         return self.query.filter_by(id=id).first()
 
     def get_race_participants_race_id(self, id_race):
         return self.query.filter_by(id_race=id_race).all()
+
+    def get_race_participants_by_id(self, id):
+        return self.query.filter_by(id=id).all()
 
 
 class Race(db.Model):
@@ -54,6 +57,7 @@ class Race(db.Model):
 
     def get_race(self, id):
         return self.query.filter_by(id=id).first()
+
     def get_all_races(self):
         return self.query.all()
 
@@ -82,7 +86,7 @@ class RaceResult(db.Model):
             self.id, self.position, self.time_to_finish, self.did_not_finish, self.id_race_participants)
 
     def get_race_result(self, id):
-        return self.query.filter_by(id=id).first()
+        return self.query.order_by(RaceResult.position).filter_by(id=id).first()
 
     def get_all_race_results(self):
         return self.query.all()

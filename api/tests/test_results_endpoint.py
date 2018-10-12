@@ -9,7 +9,7 @@ class TestResultsEndpoint(unittest.TestCase):
 
     def test_get_results_without_auth(self):
         with self.app as client:
-            response = client.get("/races/results").get_json()
+            response = client.get("/results").get_json()
             expected_result = {
                 'status': 'Failed',
                 'message': 'Unauthorized'
@@ -24,7 +24,7 @@ class TestResultsEndpoint(unittest.TestCase):
 
         headers = {'Authorization': token}
         with self.app as client:
-            response = client.get("/races/results", headers=headers).get_json()
+            response = client.get("/results", headers=headers).get_json()
             expected_result = {
                 "id_race": 1,
                 "snails": [

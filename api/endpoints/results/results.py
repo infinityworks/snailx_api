@@ -1,3 +1,5 @@
+from flask_api import status
+
 from auth.auth import Auth
 from db.models import RaceResult, RaceParticipants
 from flask import Blueprint
@@ -6,7 +8,7 @@ from globals.globals import app
 results_endpoint_blueprint = Blueprint('results', __name__)
 
 
-@results_endpoint_blueprint.route('/results/')
+@results_endpoint_blueprint.route('/results')
 def results_all():
     """GET end point to return results"""
 
@@ -14,48 +16,39 @@ def results_all():
     if not auth.authenticate_request():
         return auth.unauthorized_response()
 
-    return results_json(results_from_db())
+    return results_json()
 
 
-def results_json(results_query_response):
+def results_json():
+    race_participants = RaceParticipants()
+    race_results = RaceResult()
+    all_race_results = race_results.get_all_race_results()
+    json = []
+
+    if race_results:
+        for result in all_race_results:
+            response_race_participants = race_participants.get_race_participants_by_id(result.id_race_participants)
+            participants_json = get_participants_json(response_race_participants, race_results)
+            json.append({"id_race": response_race_participants[0].id_race, "snails": participants_json})
+
+        return json
+
+    return {
+            'status': 'Failed',
+            'message': 'Results not found'
+        }, status.HTTP_404_NOT_FOUND
 
 
-    base_json = []
+def get_participants_json(race_participants, race_results):
+    participants_json = []
+    for participants in race_participants:
+        response_race_results = race_results.get_race_result(participants.id)
 
-    for results_query in results_query_response:
+        participants_json.append({
+            "id_snail": participants.id_snail,
+            "position_snail": response_race_results.position,
+            "time_snail": response_race_results.time_to_finish,
+            "DNF": response_race_results.did_not_finish
+        })
 
-        race_participants = RaceParticipants()
-        response_race_participants = race_participants.get_race_participants_race_id(results_query.id_race_participants)
-
-        json = []
-        for participants in response_race_participants:
-            race_results = RaceResult()
-            response_race_results = race_results.get_race_result(participants.id)
-
-            json.append({
-                "id_snail": participants.id_snail,
-                "position_snail": response_race_results.position,
-                "time_snail": response_race_results.time_to_finish,
-                "DNF": response_race_results.did_not_finish
-            })
-
-        base_json.append({"id_race": participants.id_race, "snails": json})
-
-    return base_json
-
-
-def results_from_db():
-    result = RaceResult()
-    results_query_response = result.get_all_race_results()
-
-    return results_query_response
-
-
-# return {
-#     "id_race": 1,
-#     "snails": [
-#         {"id_snail": 1, "position_snail:": 3, "time_snail": 600, "DNF": False},
-#         {"id_snail": 2, "position_snail:": 2, "time_snail": 500, "DNF": False},
-#         {"id_snail": 3, "position_snail:": 1, "time_snail": 400, "DNF": False}
-#     ]
-# }
+    return participants_json
