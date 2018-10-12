@@ -79,7 +79,7 @@ class RaceResult(db.Model):
     position = db.Column(db.Integer(), nullable=False)
     time_to_finish = db.Column(db.Integer(), nullable=True)
     did_not_finish = db.Column(db.String(3))
-    id_race_participants = db.Column(db.Integer(), db.ForeignKey("race_participants.id"), nullable=False)
+    id_race_participants = db.Column(db.Integer(), db.ForeignKey("race_participants.id"))
 
     def __repr__(self):
         return "<Race Result\nid: {}\n position: {}\n time_to_finish: {}\n did_not_finish: {}\n race_participants_id: {}>".format(
