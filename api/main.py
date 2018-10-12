@@ -4,18 +4,6 @@ from globals.globals import app
 import os
 
 
-@app.route('/rounds')
-def rounds():
-    """GET end point to return round information"""
-    return {
-        "id": 1,
-        "name": "",
-        "num_races": 5,
-        "start_date": "15:9:2018",
-        "end_date": "15:10:2018"
-    }
-
-
 @app.route('/races/results')
 def results():
     """GET end point to return results"""
