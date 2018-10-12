@@ -32,12 +32,9 @@ class ResultRace:
     def __ne__(self, other):
         return not self.__eq__(other)
 
-    def gen_json(self):
-        self.json = {'id_race': self.id,
-                     'snails': [snail.get_json() for snail in self.snails]}
-
     def get_json(self):
-        return self.json
+        return {'id_race': self.id,
+                'snails': [snail.get_json() for snail in self.snails]}
 
 
 class ResultSnail:
@@ -83,25 +80,8 @@ def results_json():
             race = races[race_participant.id_race]
             if snail not in race.snails:
                 race.snails.append(snail)
-                race.gen_json()
 
         return [race.get_json() for race in races.values()]
-
-    # race_results = RaceResult()
-
-    # json = []
-    # all_race_ids = race_participants.get_all_distinct_race_ids()
-    # for race in all_race_ids:
-    #     race_participants_data = race_participants.get_race_participants_race_id(
-    #         race.id_race)
-
-    #     participants_json = get_participants_json(
-    #         race_participants_data, race_results)
-
-    #     json.append(
-    #         {"id_race": race.id_race, "snails": participants_json})
-
-    #     return json
 
     return {
         'status': 'Failed',
