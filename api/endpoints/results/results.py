@@ -26,12 +26,6 @@ class ResultRace:
         self.snails = []
         self.json = []
 
-    def __eq__(self, other):
-        return self.id == other.id
-
-    def __ne__(self, other):
-        return not self.__eq__(other)
-
     def get_json(self):
         return {'id_race': self.id,
                 'snails': [snail.get_json() for snail in self.snails]}
@@ -44,12 +38,6 @@ class ResultSnail:
         self.pos = pos
         self.time = time
         self.dnf = dnf
-
-    def __eq__(self, other):
-        return self.id == other.id
-
-    def __ne__(self, other):
-        return not self.__eq__(other)
 
     def get_json(self):
         return {

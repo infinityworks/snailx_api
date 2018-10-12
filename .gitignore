@@ -112,7 +112,7 @@ venv.bak/
 .idea/
 
 #ignore database
-*.db
+api/config/app.db
 
 #ignore migrations directory
 migrations/
