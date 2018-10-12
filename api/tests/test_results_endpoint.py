@@ -59,7 +59,7 @@ class TestResultsEndpoint(TestCase):
     @mock.patch('db.models.Race.get_all_races', MagicMock(return_value=[MockRace(1, "2018-10-10 10:00:00", "RAINED OFF", 1)]))
     @mock.patch('db.models.RaceParticipants.get_race_participants_race_id', MagicMock(return_value=[MockRaceParticipants(1,3,1)]))
     @mock.patch('db.models.RaceResult.get_race_result', MagicMock(return_value=MockRaceResults(1,1,400,False,1)))
-    def test_races_authorized_status_code(self):
+    def test_results_authorized_status_code(self):
         with self.client as client:
             response = client.get("/auth/token")
             token = response.get_json()['token']
@@ -67,6 +67,30 @@ class TestResultsEndpoint(TestCase):
             response = client.get('/results', headers=headers)
 
             self.assertTrue(status.is_success(response.status_code))
+
+    @mock.patch('db.models.Race.get_all_races', MagicMock(return_value=[MockRace(1, "2018-10-10 10:00:00", "RAINED OFF", 1)]))
+    @mock.patch('db.models.RaceParticipants.get_race_participants_race_id', MagicMock(return_value=[MockRaceParticipants(1,3,1)]))
+    @mock.patch('db.models.RaceResult.get_race_result', MagicMock(return_value=MockRaceResults(1,1,400,False,1)))
+    def test_results_no_data_in_db_404(self):
+        with self.client as client:
+            response = client.get('/results')
+            self.assertTrue(status.is_client_error(response.status_code))
+
+    def test_results_unauthorized_body(self):
+        with self.client as client:
+            result = client.get('/results').get_json()
+            expected_result = {
+                'status': 'Failed',
+                'message': 'Unauthorized'
+            }
+            self.assertEqual(result, expected_result)
+
+    def test_results_unauthorised_status_code(self):
+        with self.client as client:
+            response = client.get('/results')
+            self.assertTrue(status.is_client_error(response.status_code))
+
+
 
 if __name__ == '__main__':
     unittest.main()
