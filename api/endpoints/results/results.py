@@ -22,33 +22,56 @@ def results_all():
 def results_json():
     race_participants = RaceParticipants()
     race_results = RaceResult()
-    all_race_results = race_results.get_all_race_results()
-    json = []
 
-    if race_results:
-        for result in all_race_results:
-            response_race_participants = race_participants.get_race_participants_by_id(result.id_race_participants)
-            participants_json = get_participants_json(response_race_participants, race_results)
-            json.append({"id_race": response_race_participants[0].id_race, "snails": participants_json})
+    all_races = race_results.get_all_race_results()
 
-        return json
+    all_json = []
+    if all_races:
+        for race in all_races:
+            all_race_participants = race_participants.get_race_participants_race_id(race.id)
+            snail_json = []
 
-    return {
-            'status': 'Failed',
+            for participant in all_race_participants:
+                print(participant)
+                result = race_results.get_race_result(participant.id)
+                snail_json.append(
+                    {
+                        "id_snail": participant.id_snail,
+                        "position_snail": result.position,
+                        "time_snail": result.time_to_finish,
+                        "DNF": result.did_not_finish
+                    }
+                )
+
+            all_json.append(
+                    {"id_race": race.id,
+                    "snails": snail_json}
+            )
+
+
+        return all_json
+
+    return {'status': 'Failed',
             'message': 'Results not found'
-        }, status.HTTP_404_NOT_FOUND
+            }, status.HTTP_404_NOT_FOUND
 
 
-def get_participants_json(race_participants, race_results):
-    participants_json = []
-    for participants in race_participants:
-        response_race_results = race_results.get_race_result(participants.id)
+"""
+{
+    "id_race": 1,
+    "snails": [
+        {"id_snail": 1, "position_snail:": 3, "time_snail": 600, "DNF": False},
+        {"id_snail": 2, "position_snail:": 2, "time_snail": 500, "DNF": False},
+        {"id_snail": 3, "position_snail:": 1, "time_snail": 400, "DNF": False},
+    ]
+}
+"""
 
-        participants_json.append({
-            "id_snail": participants.id_snail,
-            "position_snail": response_race_results.position,
-            "time_snail": response_race_results.time_to_finish,
-            "DNF": response_race_results.did_not_finish
-        })
-
-    return participants_json
+"""
+{
+    "id_race": 1,
+    "snails": [
+        {"id_snail": 1, "position_snail": 1, "time_snail": 5000,"DNF": "false"}
+    ]
+},
+"""

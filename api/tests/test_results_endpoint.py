@@ -2,6 +2,8 @@ import unittest
 from globals.globals import app
 
 
+class MockResult:
+
 class TestResultsEndpoint(unittest.TestCase):
 
     def setUp(self):
