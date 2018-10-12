@@ -22,7 +22,6 @@ class MockRaceParticipants:
         self.id_snail = id_snail
 
 
-<<<<<<< HEAD
 class MockRaceResults:
     def __init__(self, id, position, time_to_finish, did_not_finish, id_race_participants):
         self.id = id
@@ -33,11 +32,6 @@ class MockRaceResults:
 
 
 class TestResultsEndpoint(TestCase):
-=======
-class MockResult:
-
-class TestResultsEndpoint(unittest.TestCase):
->>>>>>> b639eaef41bc214f0b7856faca625824a2a8eb10
 
     def setUp(self):
         self.client = app.test_client()
