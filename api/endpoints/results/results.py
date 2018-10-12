@@ -1,7 +1,7 @@
 from flask_api import status
 
 from auth.auth import Auth
-from db.models import RaceResult, RaceParticipants
+from db.models import RaceResult, RaceParticipants, Race
 from flask import Blueprint
 from globals.globals import app
 
@@ -9,8 +9,8 @@ results_endpoint_blueprint = Blueprint('results', __name__)
 
 
 @results_endpoint_blueprint.route('/results')
-def results_all():
-    """GET end point to return results"""
+def results_endpoint():
+    """GET end point to return races information"""
 
     auth = Auth(app)
     if not auth.authenticate_request():
