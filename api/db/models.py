@@ -86,7 +86,7 @@ class RaceResult(db.Model):
             self.id, self.position, self.time_to_finish, self.did_not_finish, self.id_race_participants)
 
     def get_race_result(self, id):
-        return self.query.order_by(RaceResult.position).filter_by(id=id).first()
+        return self.query.order_by(RaceResult.position).filter_by(id_race_participants=id).first()
 
     def get_all_race_results(self):
         return self.query.all()
