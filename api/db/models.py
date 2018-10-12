@@ -38,11 +38,26 @@ class RaceParticipants(db.Model):
     def get_race_participant(self, id):
         return self.query.filter_by(id=id).first()
 
+    def get_all_race_participants(self):
+        return self.query.all()
+
+    def get_all_distinct_race_ids(self):
+        return db.session.query(RaceParticipants.id_race).distinct().all()
+
     def get_race_participants_race_id(self, id_race):
         return self.query.filter_by(id_race=id_race).all()
 
     def get_race_participants_by_id(self, id):
         return self.query.filter_by(id=id).all()
+
+    def get_race_results(self):
+        return db.session.query(RaceParticipants, RaceResult).join(
+            RaceResult,
+            RaceParticipants.id == RaceResult.id_race_participants
+        ).join(
+            Race,
+            Race.id == RaceParticipants.id_race
+        ).all()
 
 
 class Race(db.Model):
@@ -79,7 +94,8 @@ class RaceResult(db.Model):
     position = db.Column(db.Integer(), nullable=False)
     time_to_finish = db.Column(db.Integer(), nullable=True)
     did_not_finish = db.Column(db.String(3))
-    id_race_participants = db.Column(db.Integer(), db.ForeignKey("race_participants.id"), nullable=False)
+    id_race_participants = db.Column(db.Integer(), db.ForeignKey(
+        "race_participants.id"), nullable=False)
 
     def __repr__(self):
         return "<Race Result\nid: {}\n position: {}\n time_to_finish: {}\n did_not_finish: {}\n race_participants_id: {}>".format(

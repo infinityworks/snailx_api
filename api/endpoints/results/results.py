@@ -19,36 +19,91 @@ def results_all():
     return results_json()
 
 
+class ResultRace:
+
+    def __init__(self, id):
+        self.id = id
+        self.snails = []
+        self.json = []
+
+    def __eq__(self, other):
+        return self.id == other.id
+
+    def __ne__(self, other):
+        return not self.__eq__(other)
+
+    def gen_json(self):
+        self.json = {'id_race': self.id,
+                     'snails': [snail.get_json() for snail in self.snails]}
+
+    def get_json(self):
+        return self.json
+
+
+class ResultSnail:
+
+    def __init__(self, id, pos, time, dnf):
+        self.id = id
+        self.pos = pos
+        self.time = time
+        self.dnf = dnf
+
+    def __eq__(self, other):
+        return self.id == other.id
+
+    def __ne__(self, other):
+        return not self.__eq__(other)
+
+    def get_json(self):
+        return {
+            "id_snail": self.id,
+            "position_snail": self.pos,
+            "time_snail": self.time,
+            "DNF": self.dnf
+        }
+
+
 def results_json():
     race_participants = RaceParticipants()
-    race_results = RaceResult()
-    all_race_results = race_results.get_all_race_results()
-    json = []
+    race_results = race_participants.get_race_results()
 
+    races = {}
     if race_results:
-        for result in all_race_results:
-            response_race_participants = race_participants.get_race_participants_by_id(result.id_race_participants)
-            participants_json = get_participants_json(response_race_participants, race_results)
-            json.append({"id_race": response_race_participants[0].id_race, "snails": participants_json})
+        for (race_participant, race_result) in race_results:
 
-        return json
+            snail = ResultSnail(race_participant.id_snail,
+                                race_result.position,
+                                race_result.time_to_finish,
+                                race_result.did_not_finish)
+
+            if race_participant.id_race not in races.keys():
+                races[race_participant.id_race] = ResultRace(
+                    race_participant.id_race)
+
+            race = races[race_participant.id_race]
+            if snail not in race.snails:
+                race.snails.append(snail)
+                race.gen_json()
+
+        return [race.get_json() for race in races.values()]
+
+    # race_results = RaceResult()
+
+    # json = []
+    # all_race_ids = race_participants.get_all_distinct_race_ids()
+    # for race in all_race_ids:
+    #     race_participants_data = race_participants.get_race_participants_race_id(
+    #         race.id_race)
+
+    #     participants_json = get_participants_json(
+    #         race_participants_data, race_results)
+
+    #     json.append(
+    #         {"id_race": race.id_race, "snails": participants_json})
+
+    #     return json
 
     return {
-            'status': 'Failed',
-            'message': 'Results not found'
-        }, status.HTTP_404_NOT_FOUND
-
-
-def get_participants_json(race_participants, race_results):
-    participants_json = []
-    for participants in race_participants:
-        response_race_results = race_results.get_race_result(participants.id)
-
-        participants_json.append({
-            "id_snail": participants.id_snail,
-            "position_snail": response_race_results.position,
-            "time_snail": response_race_results.time_to_finish,
-            "DNF": response_race_results.did_not_finish
-        })
-
-    return participants_json
+        'status': 'Failed',
+        'message': 'Results not found'
+    }, status.HTTP_404_NOT_FOUND
