@@ -41,14 +41,8 @@ class RaceParticipants(db.Model):
     def get_all_race_participants(self):
         return self.query.all()
 
-    def get_all_distinct_race_ids(self):
-        return db.session.query(RaceParticipants.id_race).distinct().all()
-
     def get_race_participants_race_id(self, id_race):
         return self.query.filter_by(id_race=id_race).all()
-
-    def get_race_participants_by_id(self, id):
-        return self.query.filter_by(id=id).all()
 
     def get_race_results(self):
         return db.session.query(RaceParticipants, RaceResult).join(
