@@ -19,35 +19,6 @@ def single_result_endpoint(id):
     return single_result_json(id)
 
 
-class ResultRace:
-
-    def __init__(self, id):
-        self.id = id
-        self.snails = []
-        self.json = []
-
-    def get_json(self):
-        return {'id_race': self.id,
-                'snails': [snail.get_json() for snail in self.snails]}
-
-
-class ResultSnail:
-
-    def __init__(self, id, pos, time, dnf):
-        self.id = id
-        self.pos = pos
-        self.time = time
-        self.dnf = dnf
-
-    def get_json(self):
-        return {
-            "id_snail": self.id,
-            "position_snail": self.pos,
-            "time_snail": self.time,
-            "DNF": self.dnf
-        }
-
-
 def single_result_json(id):
     race = Race()
     race_participants = RaceParticipants()
@@ -72,5 +43,5 @@ def single_result_json(id):
 
     return {
             'status': 'Failed',
-            'message': 'Races not found'
+            'message': 'Results not found'
         }, status.HTTP_404_NOT_FOUND

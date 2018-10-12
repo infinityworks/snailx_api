@@ -64,7 +64,7 @@ class TestResultsEndpoint(TestCase):
             response = client.get("/auth/token")
             token = response.get_json()['token']
             headers = {'Authorization': token}
-            response = client.get('/results', headers=headers)
+            response = client.get('/results/1', headers=headers)
 
             self.assertTrue(status.is_success(response.status_code))
 
