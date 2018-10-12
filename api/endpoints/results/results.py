@@ -28,12 +28,9 @@ def results_endpoint():
             race_id = each_race.id
             snails_results_list = []
             race_participants_by_id = race_participants.get_race_participants_race_id(race_id)
-            print("Printing race participants by id:\n\n {}\n\n".format(race_participants_by_id))
+
             for row in race_participants_by_id:
                 race_results_snail = race_results.get_race_result(row.id)
-                print("Printing row: \n\n {}\n\n".format(row))
-                print("Printing race_results_snail: \n\n {}\n\n".format(race_results_snail))
-                print("Next row below...")
                 snails_results_list.append({"id_snail": row.id_snail, "position_snail": race_results_snail.position, "time_snail": race_results_snail.time_to_finish, "DNF": race_results_snail.did_not_finish})
 
             json.append({
