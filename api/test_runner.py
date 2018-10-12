@@ -6,7 +6,8 @@ from tests import (test_auth,
                    test_single_snail_endpoint,
                    test_rounds_endpoint,
                    test_single_race_endpoint,
-                   test_single_round_endpoint)
+                   test_single_round_endpoint,
+                   test_results_endpoint)
 import xmlrunner
 import sys
 
@@ -19,6 +20,7 @@ suite.addTests(loader.loadTestsFromModule(test_auth))
 suite.addTests(loader.loadTestsFromModule(test_snails_endpoint))
 suite.addTests(loader.loadTestsFromModule(test_races_endpoint))
 suite.addTests(loader.loadTestsFromModule(test_auth_endpoint))
+suite.addTests(loader.loadTestsFromModule(test_results_endpoint))
 suite.addTests(loader.loadTestsFromModule(test_single_race_endpoint))
 suite.addTests(loader.loadTestsFromModule(test_single_snail_endpoint))
 suite.addTest(loader.loadTestsFromModule(test_rounds_endpoint))

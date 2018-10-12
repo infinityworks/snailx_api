@@ -35,11 +35,23 @@ class RaceParticipants(db.Model):
     def __repr__(self):
         return "<Race Participants\nid: {}\n snail_id: {}\n race_id: {}>".format(self.id, self.id_snail, self.id_race)
 
-    def get_race_participants(self, id):
+    def get_race_participant(self, id):
         return self.query.filter_by(id=id).first()
+
+    def get_all_race_participants(self):
+        return self.query.all()
 
     def get_race_participants_race_id(self, id_race):
         return self.query.filter_by(id_race=id_race).all()
+
+    def get_race_results(self):
+        return db.session.query(RaceParticipants, RaceResult).join(
+            RaceResult,
+            RaceParticipants.id == RaceResult.id_race_participants
+        ).join(
+            Race,
+            Race.id == RaceParticipants.id_race
+        ).all()
 
 
 class Race(db.Model):
@@ -81,7 +93,8 @@ class Round(db.Model):
 class RaceResult(db.Model):
     id = db.Column(db.Integer(), primary_key=True, autoincrement=True)
     position = db.Column(db.Integer(), nullable=False)
-    time_to_finish = db.Column(db.DateTime(), nullable=False)
+
+    time_to_finish = db.Column(db.Integer(), nullable=False)
     did_not_finish = db.Column(db.Boolean(), nullable=False)
     id_race_participants = db.Column(
         db.Integer(), db.ForeignKey("race_participants.id"))
@@ -91,4 +104,7 @@ class RaceResult(db.Model):
             self.id, self.position, self.time_to_finish, self.did_not_finish, self.id_race_participants)
 
     def get_race_result(self, id):
-        return self.query.filter_by(id=id).first()
+        return self.query.order_by(RaceResult.position).filter_by(id_race_participants=id).first()
+
+    def get_all_race_results(self):
+        return self.query.all()
