@@ -9,7 +9,7 @@ single_result_endpoint_blueprint = Blueprint('single_result', __name__)
 
 
 @single_result_endpoint_blueprint.route('/results/<id>')
-def results_endpoint(id):
+def single_result_endpoint(id):
     """GET end point to return single result information"""
 
     auth = Auth(app)
@@ -59,13 +59,13 @@ def single_result_json(id):
         json = []
         snails_results_list = []
         race_participants_by_id = race_participants.get_race_participants_race_id(id)
-        print(race_participants_by_id)
+
         for row in race_participants_by_id:
             race_results_snail = race_results.get_race_result(row.id)
             snails_results_list.append({"id_snail": row.id_snail, "position_snail": race_results_snail.position, "time_snail": race_results_snail.time_to_finish, "DNF": race_results_snail.did_not_finish})
 
         json.append({
-            "id_race": id,
+            "id_race": int(id),
             "snails": snails_results_list
             })
         return json
