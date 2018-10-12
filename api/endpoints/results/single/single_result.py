@@ -33,7 +33,11 @@ def single_result_json(id):
 
         for row in race_participants_by_id:
             race_results_snail = race_results.get_race_result(row.id)
-            snails_results_list.append({"id_snail": row.id_snail, "position_snail": race_results_snail.position, "time_snail": race_results_snail.time_to_finish, "DNF": race_results_snail.did_not_finish})
+            snails_results_list.append({"id_snail": row.id_snail, 
+                                        "position_snail": race_results_snail.position, 
+                                        "time_snail": race_results_snail.time_to_finish, 
+                                        "DNF": race_results_snail.did_not_finish
+                                        })
 
         json.append({
             "id_race": int(id),
