@@ -6,16 +6,6 @@ from unittest.mock import MagicMock
 from globals.globals import app
 from flask_api import status
 
-from endpoints.results.results import results_endpoint
-
-
-class MockRace:
-    def __init__(self, id, date, status, id_round):
-        self.id = id
-        self.date = date
-        self.status = status
-        self.id_round = id_round
-
 
 class MockRaceParticipant:
     def __init__(self, id, id_snail, id_race):
