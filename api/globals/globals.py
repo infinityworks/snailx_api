@@ -7,9 +7,8 @@ import os
 
 app = FlaskAPI(__name__)
 app.config.from_object(Config)
-SECRET_KEY = os.getenv('SECRET_KEY', 'my_precious')
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(app)
-migrate = Migrate(app, db)
 
 
 from endpoints.auth.auth import auth_endpoint_blueprint
@@ -32,4 +31,3 @@ app.register_blueprint(single_race_endpoint_blueprint)
 app.register_blueprint(rounds_endpoint_blueprint)
 app.register_blueprint(single_round_endpoint_blueprint)
 app.register_blueprint(single_result_endpoint_blueprint)
-
