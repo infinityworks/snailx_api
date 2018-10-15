@@ -8,6 +8,7 @@ from flask_api import status
 
 from endpoints.results.single.single_result import single_result_endpoint
 
+
 class MockRace:
     def __init__(self, id, date, status, id_round):
         self.id = id
@@ -31,34 +32,34 @@ class MockRaceResults:
         self.id_race_participants = id_race_participants
 
 
-class TestResultsEndpoint(TestCase):
+class TestSingleResultEndpoint(TestCase):
 
     def setUp(self):
         self.client = app.test_client()
 
-    @mock.patch('db.models.Race.get_all_races', MagicMock(return_value=[MockRace(1, "2018-10-10 10:00:00", "RAINED OFF", 1)]))
-    @mock.patch('db.models.RaceParticipants.get_race_participants_race_id', MagicMock(return_value=[MockRaceParticipants(1,3,1)]))
-    @mock.patch('db.models.RaceResult.get_race_result', MagicMock(return_value=MockRaceResults(1,1,400,False,1)))
+    @mock.patch('db.models.Race.get_race', MagicMock(return_value=MockRace(1, "2018-10-10 10:00:00", "RAINED OFF", 1)))
+    @mock.patch('db.models.RaceParticipants.get_race_participants_race_id', MagicMock(return_value=[MockRaceParticipants(1, 3, 1)]))
+    @mock.patch('db.models.RaceResult.get_race_result', MagicMock(return_value=MockRaceResults(1, 1, 400, False, 1)))
     def test_results_authorized_body(self):
 
         with self.client as client:
             response = client.get("/auth/token")
             token = response.get_json()['token']
             headers = {'Authorization': token}
-        
+
         result = client.get('/results/1', headers=headers).get_json()
-        expected_result =[{
-                "id_race": 1,
-                "snails": [
-                    {"id_snail": 3, "position_snail": 1, "time_snail": 400, "DNF": False}
-                ]
-            }]
+        expected_result = [{
+            "id_race": 1,
+            "snails": [
+                {"id_snail": 3, "position_snail": 1,
+                 "time_snail": 400, "DNF": False}
+            ]
+        }]
         self.assertEqual(result, expected_result)
 
-
-    @mock.patch('db.models.Race.get_all_races', MagicMock(return_value=[MockRace(1, "2018-10-10 10:00:00", "RAINED OFF", 1)]))
-    @mock.patch('db.models.RaceParticipants.get_race_participants_race_id', MagicMock(return_value=[MockRaceParticipants(1,3,1)]))
-    @mock.patch('db.models.RaceResult.get_race_result', MagicMock(return_value=MockRaceResults(1,1,400,False,1)))
+    @mock.patch('db.models.Race.get_race', MagicMock(return_value=MockRace(1, "2018-10-10 10:00:00", "RAINED OFF", 1)))
+    @mock.patch('db.models.RaceParticipants.get_race_participants_race_id', MagicMock(return_value=[MockRaceParticipants(1, 3, 1)]))
+    @mock.patch('db.models.RaceResult.get_race_result', MagicMock(return_value=MockRaceResults(1, 1, 400, False, 1)))
     def test_results_authorized_status_code(self):
         with self.client as client:
             response = client.get("/auth/token")
@@ -68,10 +69,9 @@ class TestResultsEndpoint(TestCase):
 
             self.assertTrue(status.is_success(response.status_code))
 
-
-    @mock.patch('db.models.Race.get_all_races', MagicMock(return_value=[MockRace(1, "2018-10-10 10:00:00", "RAINED OFF", 1)]))
-    @mock.patch('db.models.RaceParticipants.get_race_participants_race_id', MagicMock(return_value=[MockRaceParticipants(1,3,1)]))
-    @mock.patch('db.models.RaceResult.get_race_result', MagicMock(return_value=MockRaceResults(1,1,400,False,1)))
+    @mock.patch('db.models.Race.get_race', MagicMock(return_value=MockRace(1, "2018-10-10 10:00:00", "RAINED OFF", 1)))
+    @mock.patch('db.models.RaceParticipants.get_race_participants_race_id', MagicMock(return_value=[MockRaceParticipants(1, 3, 1)]))
+    @mock.patch('db.models.RaceResult.get_race_result', MagicMock(return_value=MockRaceResults(1, 1, 400, False, 1)))
     def test_results_no_data_in_db_404(self):
         with self.client as client:
             response = client.get('/results/1')
@@ -90,8 +90,7 @@ class TestResultsEndpoint(TestCase):
         with self.client as client:
             response = client.get('/results/1')
             self.assertTrue(status.is_client_error(response.status_code))
-            
+
 
 if __name__ == '__main__':
     unittest.main()
-    

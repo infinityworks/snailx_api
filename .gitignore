@@ -111,9 +111,6 @@ venv.bak/
 
 .idea/
 
-#ignore database
-api/config/app.db
-
 #ignore migrations directory
 migrations/
 #ignore vscode files
