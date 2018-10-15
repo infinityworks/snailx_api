@@ -6,3 +6,5 @@ pyjwt==1.4.2
 coverage==4.5.1
 unittest-xml-reporting==2.2.0
 gunicorn==19.9.0
+flask-script==2.0.6
+psycopg2==2.7.5
