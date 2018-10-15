@@ -51,19 +51,19 @@ class TestSingleSnailEndpoint(TestCase):
             response = client.get("/auth/token")
             token = response.get_json()['token']
             headers = {'Authorization': token}
-            response = client.get('/snails/1', headers=headers)
+            response = client.get('/results/1', headers=headers)
 
             self.assertTrue(status.is_success(response.status_code))
 
     @mock.patch('db.models.Snail.get_snail', MagicMock(return_value=None))
     def test_snails_no_data_in_db_404(self):
         with self.client as client:
-            response = client.get('/snails/1')
+            response = client.get('/results/1')
             self.assertTrue(status.is_client_error(response.status_code))
 
     def test_snails_unauthorized_body(self):
         with self.client as client:
-            result = client.get('/snails/1').get_json()
+            result = client.get('/results/1').get_json()
             expected_result = {
                 'status': 'Failed',
                 'message': 'Unauthorized'
@@ -72,7 +72,7 @@ class TestSingleSnailEndpoint(TestCase):
 
     def test_snails_unauthorised_status_code(self):
         with self.client as client:
-            response = client.get('/snails/1')
+            response = client.get('/results/1')
             self.assertTrue(status.is_client_error(response.status_code))
 
 

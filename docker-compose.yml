@@ -1,0 +1,25 @@
+version: '2'
+services:
+  #arbritary name 'site' in this case
+  site:
+    # Allow to run bash commands
+    tty: true
+    # the location of the Dockerfile
+    build: .
+
+    # mount the app directly in test directly into our container
+    # This allows us to edit files locally, and have them replicated in the container in docker
+    volumes:
+      - ./api:/api
+
+    command: gunicorn --bind 0.0.0.0:5000 --pythonpath /api/ wsgi
+
+    ports:
+       - "8000:5000"
+
+    environment:
+      - SECRET_KEY="'\x00\xc2\xd7O\xadj\xce\xe91\x8e*p\xfdB\xb7\x9b\xe4\xbd\xb6\x95\xa1\xd6X\xd3'"
+
+
+    
+        
