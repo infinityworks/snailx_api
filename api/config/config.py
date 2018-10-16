@@ -20,13 +20,13 @@ class Config:
 
 class ProductionConfig(Config):
     DEBUG = False
-    SQLALCHEMY_DATABASE_URI = 'postgres://tijfaqdwktvysr:ca612cfb6b6e135efe0509e585a343b6fa5bc28fe0cf3b1714ce0306f1c607fe@ec2-46-137-75-170.eu-west-1.compute.amazonaws.com:5432/d50tcej9hcois8'
+    SQLALCHEMY_DATABASE_URI = 'postgres://fqtkemerxaamnr:a50ea567ed6f24f9bfba2bd6071729d195df57a82c3bcc0ffcf07a176916d2d7@ec2-54-217-249-103.eu-west-1.compute.amazonaws.com:5432/d83g723rkf2r2o'
 
 
 class StagingConfig(Config):
     DEVELOPMENT = True
     DEBUG = True
-    SQLALCHEMY_DATABASE_URI = 'postgres://tijfaqdwktvysr:ca612cfb6b6e135efe0509e585a343b6fa5bc28fe0cf3b1714ce0306f1c607fe@ec2-46-137-75-170.eu-west-1.compute.amazonaws.com:5432/d50tcej9hcois8'
+    SQLALCHEMY_DATABASE_URI = 'postgres://fqtkemerxaamnr:a50ea567ed6f24f9bfba2bd6071729d195df57a82c3bcc0ffcf07a176916d2d7@ec2-54-217-249-103.eu-west-1.compute.amazonaws.com:5432/d83g723rkf2r2o'
 
 
 class DevelopmentConfig(Config):
