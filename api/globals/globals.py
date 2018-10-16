@@ -6,7 +6,9 @@ import os
 
 
 app = FlaskAPI(__name__)
-app.config.from_object(Config)
+app.config.from_object(os.environ['APP_SETTINGS'])
+print("############# CURRENT CONFIG: " +
+      os.environ['APP_SETTINGS'] + " #############")
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(app)
 
