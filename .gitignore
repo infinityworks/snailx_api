@@ -111,7 +111,5 @@ venv.bak/
 
 .idea/
 
-#ignore migrations directory
-migrations/
 #ignore vscode files
 .vscode/
