@@ -108,3 +108,23 @@ class RaceResult(db.Model):
 
     def get_all_race_results(self):
         return self.query.all()
+
+
+class User(db.Model):
+    id = db.Column(db.Integer(), primary_key=True, autoincrement=True)
+    username = db.Column(db.String(20), nullable=False)
+    email = db.Column(db.String(120), nullable=False)
+    password = db.Column(db.String(128), nullable=False)
+
+    def __repr__(self):
+        return "<User\nid: {}\n username: {}\n email: {}\n password: {}>".format(
+            self.id, self.username, self.email, self.password)
+
+    def get_user(self, id):
+        return self.query.filter_by(id=id).first()
+
+    def get_user_by_username(self, username):
+        return self.query.filter_by(username=username).first()
+
+    def get_user_by_email(self, email):
+        return self.query.filter_by(email=email).first()
