@@ -1,5 +1,5 @@
 import unittest
-from unittest.mock import MagicMock, Mock
+from unittest.mock import MagicMock
 from unittest import mock, TestCase
 from commands.create_user_command import CreateUserCommand, prompt, prompt_pass
 from db.models import User
