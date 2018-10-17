@@ -123,6 +123,9 @@ class User(db.Model):
     def get_user(self, id):
         return self.query.filter_by(id=id).first()
 
+    def get_users(self):
+        return self.query.all()
+
     def get_user_by_username(self, username):
         return self.query.filter_by(username=username).first()
 
