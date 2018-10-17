@@ -18,8 +18,13 @@ class CreateUserCommand(Command):
         password = prompt_pass(
             'Please enter a password (max length 128 chars)')
 
-        hash_pw = Bcrypt(app).generate_password_hash(password)
-        new_user = User(username=username, email=email, password=hash_pw)
+        new_user = User(username=username, email=email,
+                        password=self.hash_password(password))
 
         db.session.add(new_user)
         db.session.commit()
+
+        return new_user
+
+    def hash_password(self, password):
+        return Bcrypt(app).generate_password_hash(password)

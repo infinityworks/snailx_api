@@ -8,7 +8,8 @@ from tests import (test_auth,
                    test_single_race_endpoint,
                    test_single_round_endpoint,
                    test_results_endpoint,
-                   test_single_result_endpoint)
+                   test_single_result_endpoint,
+                   test_command_create_user)
 import xmlrunner
 import sys
 
@@ -27,6 +28,8 @@ suite.addTests(loader.loadTestsFromModule(test_single_snail_endpoint))
 suite.addTest(loader.loadTestsFromModule(test_rounds_endpoint))
 suite.addTest(loader.loadTestsFromModule(test_single_round_endpoint))
 suite.addTest(loader.loadTestsFromModule(test_single_result_endpoint))
+suite.addTest(loader.loadTestsFromModule(test_command_create_user))
+
 
 # initialize a runner, pass it your suite and run it
 # runner = unittest.TextTestRunner(verbosity=3)
