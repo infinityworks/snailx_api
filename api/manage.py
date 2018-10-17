@@ -1,12 +1,8 @@
-import os
-from flask_script import Manager, prompt
-from flask_migrate import Migrate, MigrateCommand
-
-from flask_bcrypt import Bcrypt
+from flask_script import Manager
+from flask_migrate import MigrateCommand
 
 from globals.globals import app, db
 from config.config import Config
-from db.models import User
 
 from commands.create_user_command import CreateUserCommand
 
