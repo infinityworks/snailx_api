@@ -18,7 +18,7 @@ jobs:
           key: pip-dependency-cache
 
       - run:
-          name: install dependencies
+          name: Install pip dependencies
           command: |
             python3 -m venv venv
             . venv/bin/activate
@@ -29,25 +29,8 @@ jobs:
           paths:
             - api/requirements.txt
 
-  test:
-    docker:
-      - image: circleci/python:3.6.1
-    steps:
-      - checkout
-
-            # Download and cache dependencies
-      - restore_cache:
-          key: pip-dependency-cache
-
       - run:
-          name: install dependencies
-          command: |
-            python3 -m venv venv
-            . venv/bin/activate
-            pip install -r requirements.txt
-
-      - run:
-          name: run tests
+          name: Run tests
           command: |
             . venv/bin/activate
             cd api
@@ -59,12 +42,3 @@ jobs:
       - store_artifacts:
           path: api/test-reports
           destination: api/test-reports
-
-workflows:
-  version: 2
-  build_and_test:
-    jobs:
-      - build
-      - test:
-          requires:
-            - build
