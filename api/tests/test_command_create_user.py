@@ -1,7 +1,7 @@
 import unittest
 from unittest.mock import MagicMock, Mock
 from unittest import mock, TestCase
-from commands.create_user_command import CreateUserCommand
+from commands.create_user_command import CreateUserCommand, prompt, prompt_pass
 from db.models import User
 
 
@@ -10,12 +10,15 @@ class TestCommandCreateUser(TestCase):
     def setUp(self):
         self.command = CreateUserCommand()
 
-    @mock.patch('commands.create_user_command.CreateUserCommand.run',
-                MagicMock(return_value=User(username='test', email='test', password='test')))
     @mock.patch('commands.create_user_command.CreateUserCommand.hash_password',
                 MagicMock(return_value='test'))
+    @mock.patch('commands.create_user_command.prompt', MagicMock(return_value='test'))
+    @mock.patch('commands.create_user_command.prompt_pass', MagicMock(return_value='test'))
+    @mock.patch('commands.create_user_command.db.session.add', MagicMock(return_value=None))
+    @mock.patch('commands.create_user_command.db.session.commit', MagicMock(return_value=None))
     def test_command_create_user(self):
         new_user = self.command.run()
+
         expected_user = User(username='test', email='test', password='test')
         self.assertEqual(new_user.__repr__(), expected_user.__repr__())
 
