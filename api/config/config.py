@@ -6,12 +6,10 @@ basedir = os.path.abspath(os.path.dirname(__file__))
 class Config:
     DEBUG = False
     TESTING = False
-
-    SECRET_KEY = os.getenv('SECRET_KEY', 'my_precious')
+    SECRET_KEY = os.getenv('SECRET_KEY')
 
 
 class ProductionConfig(Config):
-    DEBUG = False
     SQLALCHEMY_DATABASE_URI = 'postgres://wifosdkondwers:c4d03ddd8e3c2d404d828c1fbd6fea57fbc86700efc716ba7fd566a023044083@ec2-46-137-75-170.eu-west-1.compute.amazonaws.com:5432/d5ajcc7bafdnq3'
 
 
@@ -30,6 +28,5 @@ class DevelopmentConfig(Config):
     DB_URL = 'postgresql://{user}:{pw}@{url}/{db}'.format(
         user=POSTGRES_USER, pw=POSTGRES_PW, url=POSTGRES_URL, db=POSTGRES_DB)
     SQLALCHEMY_DATABASE_URI = DB_URL
-
     DEVELOPMENT = True
     DEBUG = True
