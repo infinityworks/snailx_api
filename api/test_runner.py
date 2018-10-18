@@ -32,7 +32,6 @@ suite.addTest(loader.loadTestsFromModule(test_command_create_user))
 
 
 # initialize a runner, pass it your suite and run it
-# runner = unittest.TextTestRunner(verbosity=3)
 runner = xmlrunner.XMLTestRunner(verbosity=3, output='test-reports/unittest')
 
 ret = not runner.run(suite).wasSuccessful()
