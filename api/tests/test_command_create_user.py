@@ -29,7 +29,7 @@ class TestCommandCreateUser(TestCase):
                 MagicMock(return_value=User(username='test', email='test', password=CreateUserCommand().hash_password('test'))))
     def test_command_create_user_hash_password_is_bytes(self):
         new_pw_hashed = self.command.run().password
-        self.assertIsInstance(new_pw_hashed, bytes)
+        self.assertIsInstance(new_pw_hashed.encode('utf-8'), bytes)
 
     @mock.patch('commands.create_user_command.CreateUserCommand.run')
     def test_command_create_user_hash_password(self, mock_command_run):
