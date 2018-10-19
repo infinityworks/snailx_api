@@ -27,4 +27,4 @@ class CreateUserCommand(Command):
         return new_user
 
     def hash_password(self, password):
-        return Bcrypt(app).generate_password_hash(password)
+        return Bcrypt(app).generate_password_hash(password).decode("utf-8")
