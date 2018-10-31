@@ -3,7 +3,7 @@ from globals.globals import db
 
 class Trainer(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String(12), nullable=False)
+    name = db.Column(db.String(30), nullable=False)
 
     def __repr__(self):
         return "<Trainer\nid: {}\n name: {}>".format(self.id, self.name)
@@ -14,7 +14,7 @@ class Trainer(db.Model):
 
 class Snail(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String(12), nullable=False)
+    name = db.Column(db.String(30), nullable=False)
     trainer_id = db.Column(db.Integer, db.ForeignKey('trainer.id'))
 
     def __repr__(self):
@@ -76,7 +76,7 @@ class Race(db.Model):
 
 class Round(db.Model):
     id = db.Column(db.Integer(), primary_key=True, autoincrement=True)
-    name = db.Column(db.String(12), nullable=False)
+    name = db.Column(db.String(30), nullable=False)
     start_date = db.Column(db.DateTime(), nullable=False)
     end_date = db.Column(db.DateTime(), nullable=False)
 
