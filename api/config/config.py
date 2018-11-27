@@ -10,13 +10,14 @@ class Config:
 
 
 class ProductionConfig(Config):
-    SQLALCHEMY_DATABASE_URI = os.environ['DATABASE_URL']
+    SQLALCHEMY_DATABASE_URI = os.getenv('DATABASE_URL') or 'not-set'
 
 
 class StagingConfig(Config):
     DEVELOPMENT = True
     DEBUG = True
-    SQLALCHEMY_DATABASE_URI = os.environ['DATABASE_URL']
+
+    SQLALCHEMY_DATABASE_URI = os.getenv('DATABASE_URL') or 'not-set'
 
 
 class DevelopmentConfig(Config):
